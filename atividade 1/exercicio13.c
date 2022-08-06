@@ -7,7 +7,7 @@
 
 int main (){
     int telefone=0, op=1;
-    char nome[50];
+    char nome[50]; 
 
     FILE *arquivo;
     arquivo = fopen("nomesTelefones.txt","w");  
