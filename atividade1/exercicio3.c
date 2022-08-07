@@ -3,7 +3,7 @@
 
 //NOME: Yasmin
 //Exercício 3
-/*Fac a um programa que leia do usu  ́ario o tamanho de um vetor a ser lido e fac ̧a a alocacao din ˆamica de mem  ́oria. Em seguida, leia do usu  ́ario seus valores e mostre quantos dos n  ́umeros s  ̃ao pares e quantos s  ̃ao  ́ımpares.*/
+/*Faca um programa que leia do usuario o tamanho de um vetor a ser lido e faca a alocacao dinamica de memoria. Em seguida, leia do usuario seus valores e mostre quantos dos numeros sao pares e quantos sao ımpares*/
 
 int main (){
   int tamanho=0, cont=0, par=0, impar=0;

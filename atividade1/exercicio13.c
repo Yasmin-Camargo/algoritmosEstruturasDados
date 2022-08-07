@@ -3,7 +3,7 @@
 
 //NOME: Yasmin
 //Exercício 13
-/*Faca um programa que permita que o usuario entre com diversos nomes e telefone para cadastro, e crie um arquivo com essas informac ̧oes, uma por linha. O usuario finaliza a entrada com ‘0’ para o telefone.*/
+/*Exercicio 13 da lista 11 de arquivos: Faca um programa que permita que o usuario entre com diversos nomes e telefone para cadastro, e crie um arquivo com essas informacoes, uma por linha. O usuario finaliza a entrada com ‘0’ para o telefone*/
 
 int main (){
     int telefone=0, op=1;
