@@ -3,17 +3,22 @@
 
 //Escopo das funções
 void adicionarNome();
+void mostrarNome();
 
 //Váriaveis globais
-char **nomes=NULL;
-int linhas=0;
+char *nomes;
+int elementos=0;
 
 int main(){
     int op=1;
 
-    //alocando linhas e colunas
-    nomes = (char**)malloc(linhas * sizeof(char *)); 
-    nomes[linhas] = (char*)malloc(sizeof(char)); 
+    //alocando memória
+    nomes = (char*)malloc(sizeof(char )); 
+    //testa se conseguiu alocar espaço
+    if (nomes == NULL){
+        printf("Erro na alocacao de memoria");
+        exit (1);
+    }
 
     //Verificando se conseguiu alocar memória
     if (nomes == NULL){
@@ -23,11 +28,11 @@ int main(){
 
     //menu
     while (op != 0){
-        printf("\n\n1) Adicionar nome");
-        printf("\n2) Remover nome");
-        printf("\n3) Listar");
-        printf("\n4) Sair");
-        printf("\nEscolha uma opcao: ");
+        printf("\n\n --- 1) Adicionar nome");
+        printf("\n --- 2) Remover nome");
+        printf("\n --- 3) Listar");
+        printf("\n --- 4) Sair");
+        printf("\n   Escolha uma opcao: ");
         scanf("%d", &op);
 
         switch (op){
@@ -40,7 +45,7 @@ int main(){
             break;
 
             case 3:
-            printf("Adicionando");
+            mostrarNome();
             break;
 
             case 4:
@@ -54,9 +59,6 @@ int main(){
     }
     
     //liberando memória
-    for (int i = 0; i < linhas; i++){
-        free(nomes[i]);
-    }
     free(nomes);
     
 }
@@ -64,28 +66,43 @@ int main(){
 
 //FUNÇÕES:
 void adicionarNome(){
-    char caracter;
-
-    linhas++;
-    nomes = (char**)realloc(*nomes, linhas * sizeof(char *));
+    char caracteres[20];
 
     fflush(stdin);
     printf("\n\n Digite o nome a ser adicionado: ");
-    scanf("%c", &caracter);
+    scanf("%s", &caracteres);
+    strcat(caracteres,";");
     
-    int colunas=0;
-    while (caracter != '\n'){
-        nomes[linhas] = (char*)realloc(nomes, sizeof(caracter)+1);
-        nomes[linhas][colunas] = caracter;
-        
-        if (nomes == NULL){
-            printf("\n\n ERRO de alocacao de memoria!!");
-            exit(1);
-        }
-
-        scanf("%c", &caracter);
-        colunas++;
+    //Realocando espaço para mais uma palavra
+    nomes = (char*)realloc(nomes, sizeof(caracteres) * sizeof(char) + 1);
+    //Testa se conseguiu alocar espaço
+    if (nomes == NULL){
+        printf("Erro na alocacao de memoria");
+        exit (1);
     }
-    printf("\n\n-- Nome final: %s\n\n", nomes[linhas]);
+
+    int i=0;
+    for (elementos; elementos<=(strlen(nomes)); elementos++) {
+        nomes[elementos] = caracteres[i];
+        i++;
+    } 
+    elementos--;
+    
+    printf("\n\n-- Nome final: %s\n\n", nomes);
 }
     
+
+void mostrarNome(){
+    printf("\n...\n");
+    for (int i=0; i<=(strlen(nomes)); i++) {
+        if (nomes[i] != ';'){
+            printf("%c", nomes[i]);
+        }
+        if (nomes[i] == ';') {
+            printf("\n");
+        }
+    }
+    printf("\n...\n");
+}
+
+
