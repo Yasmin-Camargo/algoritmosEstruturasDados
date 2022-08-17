@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 //Escopo das funções
 void adicionarNome();
 void mostrarNome();
+void excluirNome();
 
 //Váriaveis globais
 char *nomes;
@@ -41,11 +43,11 @@ int main(){
             break;
 
             case 2:
-            printf("Adicionando");
+                excluirNome();
             break;
 
             case 3:
-            mostrarNome();
+                mostrarNome();
             break;
 
             case 4:
@@ -54,13 +56,11 @@ int main(){
             break;
 
             default:
-            printf("\n\n OPCAO INVALIDA!!! \n\n");
+            printf("\n\n OPCAO INVALIDA!!!");
         }
     }
-    
     //liberando memória
     free(nomes);
-    
 }
 
 
@@ -70,39 +70,64 @@ void adicionarNome(){
 
     fflush(stdin);
     printf("\n\n Digite o nome a ser adicionado: ");
-    scanf("%s", &caracteres);
+    scanf("%s", caracteres);
     strcat(caracteres,";");
     
     //Realocando espaço para mais uma palavra
-    nomes = (char*)realloc(nomes, sizeof(caracteres) * sizeof(char) + 1);
+    nomes = (char*)realloc(nomes, sizeof(caracteres) * sizeof(char) + 2);
     //Testa se conseguiu alocar espaço
     if (nomes == NULL){
         printf("Erro na alocacao de memoria");
         exit (1);
     }
 
+    //Adiciona no ponteiro caracter por caracter da nova palavra
     int i=0;
     for (elementos; elementos<=(strlen(nomes)); elementos++) {
         nomes[elementos] = caracteres[i];
         i++;
     } 
     elementos--;
-    
-    printf("\n\n-- Nome final: %s\n\n", nomes);
 }
     
 
 void mostrarNome(){
-    printf("\n...\n");
-    for (int i=0; i<=(strlen(nomes)); i++) {
-        if (nomes[i] != ';'){
-            printf("%c", nomes[i]);
-        }
-        if (nomes[i] == ';') {
-            printf("\n");
-        }
-    }
-    printf("\n...\n");
+    printf("\n\n\n      Nomes:\n        %s", nomes);
 }
+
+
+void excluirNome(){
+    char caracteresExcluidos[20];
+    int posicao;
+
+    printf("Digite o nome a ser excluido: ");
+    scanf("%s", caracteresExcluidos);
+
+    char *excluir = strstr(nomes, caracteresExcluidos); //ponteiro onde começa a string encontrada
+    
+    if (!excluir) { //Verifica se foi encontrado o nome
+        printf("\n\n ERRO! O nome não existe\n");
+    }
+    else{
+        posicao = strlen(nomes) - strlen(excluir); //posição onde esta a palavra
+        if (posicao != 0 && nomes[posicao - 1] == ',') {
+            posicao--;
+            excluir--;
+        }
+
+        //Move as letras até que toda a palavra esteja removida 
+        for (int i = 0; i <= strlen(caracteresExcluidos); i++) {
+            for (int j = 0; j < strlen(excluir); j++) {
+                nomes[posicao + j] = nomes[posicao + j + 1];
+            }
+            elementos--;
+        }
+
+        //Realoca o novo espaço
+        nomes = (char *)realloc(nomes, ((strlen(nomes)) + 2) * sizeof(char));
+    }
+
+}
+
 
 
