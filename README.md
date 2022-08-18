@@ -28,6 +28,14 @@ para armazenar os registros dos alunos.
 (d) O programa devera pedir ao usuario que entre com as informacoes dos alunos. 
 (e) Ao final, mostrar os dados armazenados e liberar a memoria alocada. 
 
+#### exercicio26
+Exercício 26 da Lista 09 de Ponteiros: Implemente uma funcao que calcule as raızes de uma equacao do segundo grau do tipo Ax2 + Bx + C = 0.
+Essa funcao deve obedecer ao seguinte prototipo: 
+int raizes(float A,float B,float C,float * X1,float * X2);
+Essa funcao deve ter como valor de retorno o nuumero de raızes reais e distintas da
+equacao. Se existirem raızes reais, seus valores devem ser armazenados nas variaveis 
+apontadas por X1 e X2
+
 ### lista01
 #### exercicio01
 Criar um projeto "Olá Mundo" em C no Visual Code e usando o debug com um breakpoint no printf
