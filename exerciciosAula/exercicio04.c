@@ -41,8 +41,7 @@ void imprimirString(){
 
 	for (int i = 0; i < strlen(string); i++){
 		if (!(string[i] == 'a' || string[i] == 'e' || string[i] == 'i' || string[i] == 'o' || string[i] == 'u')){
-			printf("%c", st
-      ring[i]);
+			printf("%c", string[i]);
 		}
 	}
 }

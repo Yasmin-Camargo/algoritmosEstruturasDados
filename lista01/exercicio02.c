@@ -1,3 +1,4 @@
+//NOME: YASMIN 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -106,7 +107,7 @@ void excluirNome(){
     char *excluir = strstr(nomes, caracteresExcluidos); //ponteiro onde começa a string encontrada
     
     if (!excluir) { //Verifica se foi encontrado o nome
-        printf("\n\n ERRO! O nome não existe\n");
+        printf("\n\n ERRO! O nome nao existe\n");
     }
     else{
         posicao = strlen(nomes) - strlen(excluir); //posição onde esta a palavra
