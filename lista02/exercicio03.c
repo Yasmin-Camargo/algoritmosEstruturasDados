@@ -84,10 +84,10 @@ int main (){
             mostrarPessoa();
             break;
         case 3:
-            /* code */
+            buscarPessoa();
             break;
         case 4:
-            /* code */
+            apagarPessoa();
             break;
         case 0:
             printf("\n\n Saindo...");
@@ -101,7 +101,7 @@ int main (){
 }
 
 void adicionarPessoa(){
-    char caracteres[20];
+    char caracteres[10];
     int idadeAux, tamanhoFoiArmazenado;
 
     strcpy(caracteres,"");
@@ -118,7 +118,7 @@ void adicionarPessoa(){
         tamanhoFoiArmazenado = (*numPessoas-1) *  TAMANHO + sizeof(int);
 
         //Realocando espaço para mais um item
-        pBuffer = (char*)realloc(pBuffer, *numPessoas *  TAMANHO + sizeof(int));
+        pBuffer = (void*)realloc(pBuffer, *numPessoas *  TAMANHO + sizeof(int));
         
         //Testa se conseguiu alocar espaço
         if (pBuffer == NULL){
@@ -134,6 +134,7 @@ void adicionarPessoa(){
     //Adicinando dados
     fflush(stdin);
     printf("\n\nAdicione os seguintes dados: ");
+    numPessoas = pBuffer;
     printf("\n Nome: ");
     scanf("%s", caracteres);
     strcpy(nome,caracteres);
@@ -153,9 +154,68 @@ void mostrarPessoa(){
     printf ("\n__________________________________");
 
     for (int i = 0; i < *numPessoas; i++){
-        printf ("\n\n Pessoa: %d", i+1);
+        printf ("\n\n %d)", i+1);
         printf ("\n Nome: %s", (char *) (pBuffer + (TAMANHO * i) + sizeof(int)));
         printf ("\n Idade: %d",  *(int *) (pBuffer + (TAMANHO * i) + sizeof(int) + sizeof(char)*10 + 1));
         printf ("\n Telefone: %s",  (char *) (pBuffer + (TAMANHO * i) + sizeof(int) + sizeof(char)*10 + 1 + sizeof(int))); 
     }
+    printf ("\n__________________________________\n");
+}
+
+
+void buscarPessoa(){
+    char caracteres[10];
+    int encontrou=0;
+    strcpy(caracteres,"");
+
+    printf("\nQual nome voce deseja buscar: ");
+    scanf("%s",caracteres);
+    
+    for (int i = 0; i < *numPessoas; i++){
+        if (strcmp(((char *) (pBuffer + (TAMANHO * i) + sizeof(int))), caracteres) == 0){
+            printf("\n\n == O nome foi encontrado! ==\n");
+            encontrou=1;
+
+            //Mostra dados da pessoa se encontrou o nome
+            printf ("\n Nome: %s", (char *) (pBuffer + (TAMANHO * i) + sizeof(int)));
+            printf ("\n Idade: %d",  *(int *) (pBuffer + (TAMANHO * i) + sizeof(int) + sizeof(char)*10 + 1));
+            printf ("\n Telefone: %s",  (char *) (pBuffer + (TAMANHO * i) + sizeof(int) + sizeof(char)*10 + 1 + sizeof(int))); 
+            break;
+        }
+    }  
+    if (encontrou==0){
+        printf("\n\n Este nome nao foi encontrado! :( ");
+    }
+}
+
+
+void apagarPessoa(){
+    char caracteres[10];
+    int apagar=0, encontrou=0;
+
+    printf("\nDigite o nome a ser excluido: ");
+    scanf("%s", caracteres);
+
+    for (int i = 0; i < *numPessoas; i++){
+        if (strcmp(((char *) (pBuffer + (TAMANHO * i) + sizeof(int))), caracteres) == 0){
+            apagar=1; //Se encontrou o nome começa a mover a informação
+            encontrou=1;
+        }
+        if (apagar==1){
+            strcpy((char *) (pBuffer + (TAMANHO * (i)) + sizeof(int)), (char *) (pBuffer + (TAMANHO * (i+1)) + sizeof(int)));
+
+            *(int *) (pBuffer + (TAMANHO * (i)) + sizeof(int) + sizeof(char)*10 + 1) = *(int *) (pBuffer + (TAMANHO * (i+1)) + sizeof(int) + sizeof(char)*10 + 1);
+
+            strcpy((char *) (pBuffer + (TAMANHO * (i)) + sizeof(int) + sizeof(char)*10 + 1 + sizeof(int)), (char *) (pBuffer + (TAMANHO * (i+1)) + sizeof(int) + sizeof(char)*10 + 1 + sizeof(int)));
+        }
+    } 
+    
+
+    //Realocando espaço
+    pBuffer = (void*)realloc(pBuffer, (*numPessoas-1) * TAMANHO + sizeof(int));
+    *numPessoas = *numPessoas-1;
+
+    if (encontrou==1){
+        printf("\nPalavra excluida com sucesso!\n");
+    } 
 }
