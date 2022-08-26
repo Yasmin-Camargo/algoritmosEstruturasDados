@@ -18,7 +18,7 @@ void mostrarPessoa(int *numPessoas, void *pBuffer, int *i);
 void buscarPessoa(int *numPessoas, void *pBuffer, char *palavra, int *op, int *i);
 void apagarPessoa(int *numPessoas, void *pBuffer, char *palavra, int *op, int *i);
 
-//Struct para armazenar dados do aluno
+//Struct para armazenar dados da pessoa
 typedef struct registroAluno{
     char nome[10];
     int idade;
