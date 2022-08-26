@@ -51,3 +51,12 @@ Faça uma agenda capaz de incluir, apagar, buscar e listar quantas pessoas o usu
 - Não pergunte para o usuário quantas pessoas ele vai incluir.
 - Não pode alocar espaço para mais pessoas do que o necessário.
 - Cada pessoa tem nome[10], idade e telefone.
+
+### lista03
+#### exercicio07
+O programa deve armazenar no máximo 10 pessoas
+Todas as variáveis que forem usadas no programa deve ser ponteiros. A única exceção é o item 1 que deve ser uma variável global Pessoa pessoas[10].
+Os ponteiros devem apontar para um buffer chamado pBuffer onde os dados devem
+ser armazenados. Por exemplo, um contador para um for deve ser um ponteiro para
+int e o int vai ficar armazenado dentro de pBuffer
+Não pode usar struct dentro do pBuffer

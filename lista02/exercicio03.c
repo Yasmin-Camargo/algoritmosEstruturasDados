@@ -50,24 +50,10 @@ int main (){
     strcpy(nome, "");
     *idade = 0;
     strcpy(telefone, "");
-
-/*
-    printf ("\n CONTEUDO VETORES:");
-    printf ("\n %d", *numPessoas);
-    printf ("\n %s", nome);
-    printf ("\n %d", *idade);
-    printf ("\n %s", telefone);
-
-    printf ("\n\n CONTEUDO *pBuffer:");
-    printf ("\n %d", *(int *) (pBuffer));
-    printf ("\n %s", (char *) (pBuffer + sizeof(int)));
-    printf ("\n %d",  *(int *) (pBuffer + sizeof(int) + sizeof(char)*10 + 1));
-    printf ("\n %s",  (char *) (pBuffer + sizeof(int) + sizeof(char)*10 + 1 + sizeof(int)));
-*/
     
     while (op!=0){
         printf ("\n\n ----------------------------");
-        printf ("\n            AGENDA            ");
+        printf ("\n          AGENDA 1.1           ");
         printf ("\n ----------------------------  ");
         printf ("\n  1) Incluir ");
         printf ("\n  2) Mostrar ");
@@ -102,33 +88,30 @@ int main (){
 
 void adicionarPessoa(){
     char caracteres[10];
-    int idadeAux, tamanhoFoiArmazenado;
+    int tamanhoFoiArmazenado;
 
     strcpy(caracteres,"");
     *numPessoas=*numPessoas+1; //nova pessoa
 
-    //Primeira pessoa a ser adicionada
-    if (*numPessoas == 1){
-        numPessoas = pBuffer;
-        nome = pBuffer + sizeof(int);
-        idade = pBuffer + sizeof(int) + sizeof(char) * 10 + 1;
-        telefone = pBuffer + sizeof(int) + sizeof(char) * 10 + 1 + sizeof(int);
-    }
-    else{
+    //Adicionando novos dados
+    if (*numPessoas != 1){
         tamanhoFoiArmazenado = (*numPessoas-1) *  TAMANHO + sizeof(int);
 
         //Realocando espaço para mais um item
         pBuffer = (void*)realloc(pBuffer, *numPessoas *  TAMANHO + sizeof(int));
-        
-        //Testa se conseguiu alocar espaço
         if (pBuffer == NULL){
             printf("Erro na alocacao de memoria");
             exit (1);
         }
+
         //Definindo onde os novos enderereços onde vão apontar
         nome = pBuffer + tamanhoFoiArmazenado;
         idade = pBuffer + sizeof(char) * 10 + 1 + tamanhoFoiArmazenado;
         telefone = pBuffer + sizeof(char) * 10 + 1 + sizeof(int) + tamanhoFoiArmazenado;
+        if (numPessoas==NULL || nome == NULL || idade == NULL || telefone == NULL){
+            printf("\n\n ERRO de alocacao de memoria!!");
+            exit(1);
+        }
     }
 
     //Adicinando dados
@@ -140,8 +123,7 @@ void adicionarPessoa(){
     strcpy(nome,caracteres);
 
     printf(" Idade: ");
-    scanf("%d", &idadeAux);
-    *idade = idadeAux;
+    scanf("%d", idade);
 
     printf(" Telefone: ");
     scanf("%s", caracteres);
@@ -202,16 +184,19 @@ void apagarPessoa(){
             encontrou=1;
         }
         if (apagar==1){
+            //Sobrescreve os dados até que toda a palavra esteja removida (nome a ser removido é substituido pelo que vem depois dele)
+            //nome
             strcpy((char *) (pBuffer + (TAMANHO * (i)) + sizeof(int)), (char *) (pBuffer + (TAMANHO * (i+1)) + sizeof(int)));
-
+            
+            //idade
             *(int *) (pBuffer + (TAMANHO * (i)) + sizeof(int) + sizeof(char)*10 + 1) = *(int *) (pBuffer + (TAMANHO * (i+1)) + sizeof(int) + sizeof(char)*10 + 1);
-
+            
+            //telefone
             strcpy((char *) (pBuffer + (TAMANHO * (i)) + sizeof(int) + sizeof(char)*10 + 1 + sizeof(int)), (char *) (pBuffer + (TAMANHO * (i+1)) + sizeof(int) + sizeof(char)*10 + 1 + sizeof(int)));
         }
     } 
     
-
-    //Realocando espaço
+    //Realocando novo espaço
     pBuffer = (void*)realloc(pBuffer, (*numPessoas-1) * TAMANHO + sizeof(int));
     *numPessoas = *numPessoas-1;
 
