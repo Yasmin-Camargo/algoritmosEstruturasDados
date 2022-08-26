@@ -1,13 +1,13 @@
+//NOME: Yasmin Souza Camargo
+//Exercício 4 - Lista 10 - Alocação dinâmica
+/* Faca um programa que receba do usuario o tamanho de uma string e chame uma 
+funcao para alocar dinamicamente essa string. Em seguida, o usuario dever a informar o
+conteudo dessa string. O programa imprime a string sem suas vogais
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-//NOME: Yasmin
-//Exercício 4 - Lista 10 - Alocação dinâmica
-/* Faca um programa que receba do usuario o tamanho de uma string e chame uma ´
-func¸ao para alocar dinamicamente essa string. Em seguida, o usuario dever a informar o
-conteudo dessa string. O programa imprime a string sem suas vogais
-*/
 
 void alocarString(int tamanhoStringAlocada);
 void imprimirString();

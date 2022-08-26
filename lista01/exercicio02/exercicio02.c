@@ -1,4 +1,8 @@
-//NOME: YASMIN 
+//NOME: Yasmin Souza Camargo
+/*Faça um programa que armazena nomes. O programa deve armazenar
+todos os nomes na mesma string. O tamanho da string deve crescer e diminuir
+conforme nomes forem colocados ou removidos. Não pode ter desperdício de memória.*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -10,13 +14,13 @@ void excluirNome();
 
 //Váriaveis globais
 char *nomes;
-int elementos=0;
+int elementos = 0;
 
 int main(){
-    int op=1;
+    int op = 1;
 
     //alocando memória
-    nomes = (char*)malloc(sizeof(char )); 
+    nomes = (char*) malloc(sizeof(char )); 
     //testa se conseguiu alocar espaço
     if (nomes == NULL){
         printf("Erro na alocacao de memoria");
@@ -72,10 +76,10 @@ void adicionarNome(){
     fflush(stdin);
     printf("\n\n Digite o nome a ser adicionado: ");
     scanf("%s", caracteres);
-    strcat(caracteres,";");
+    strcat(caracteres, ";");
     
     //Realocando espaço para mais uma palavra
-    nomes = (char*)realloc(nomes, sizeof(caracteres) * sizeof(char) + 2);
+    nomes = (char*) realloc(nomes, sizeof(caracteres) * sizeof(char) + 2);
     //Testa se conseguiu alocar espaço
     if (nomes == NULL){
         printf("Erro na alocacao de memoria");
@@ -84,18 +88,16 @@ void adicionarNome(){
 
     //Adiciona no ponteiro caracter por caracter da nova palavra
     int i=0;
-    for (elementos; elementos<=(strlen(nomes)); elementos++) {
+    for (elementos; elementos <= (strlen(nomes)); elementos++) {
         nomes[elementos] = caracteres[i];
         i++;
     } 
     elementos--;
 }
     
-
 void mostrarNome(){
     printf("\n\n\n      Nomes:\n        %s", nomes);
 }
-
 
 void excluirNome(){
     char caracteresExcluidos[20];
@@ -108,8 +110,7 @@ void excluirNome(){
     
     if (!excluir) { //Verifica se foi encontrado o nome
         printf("\n\n ERRO! O nome nao existe\n");
-    }
-    else{
+    } else{
         posicao = strlen(nomes) - strlen(excluir); //posição onde esta a palavra
         if (posicao != 0 && nomes[posicao - 1] == ',') {
             posicao--;
@@ -127,7 +128,6 @@ void excluirNome(){
         //Realoca o novo espaço
         nomes = (char *)realloc(nomes, ((strlen(nomes)) + 2) * sizeof(char));
     }
-
 }
 
 

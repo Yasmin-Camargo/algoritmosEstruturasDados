@@ -1,8 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
-//NOME: Yasmin
+//NOME: Yasmin Souza Camargo
 //Exercício 11 - Lista 10 - Alocação dinâmica
 /* Crie um programa que declare uma estrutura (registro) para o cadastro de alunos.
 (a) Deverao ser armazenados, para cada aluno: matrıcula, sobrenome (apenas um) e
@@ -15,12 +11,16 @@ para armazenar os registros dos alunos.
 (e) Ao final, mostrar os dados armazenados e liberar a memoria alocada. 
 */
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
 //Struct para armazenar dados do aluno
 typedef struct registroAluno{
     int matriculaAluno;
     char sobrenomeAluno[30];
     int anoNascimentoAluno;
-}Aluno;
+} Aluno;
 
 int main (){
     int numAlunos;
@@ -33,7 +33,7 @@ int main (){
     novoAluno = (Aluno *) malloc(numAlunos * sizeof(Aluno));
 
     //Lendo dados
-    for (int i=0; i<numAlunos;i++){
+    for (int i = 0; i < numAlunos; i++){
         printf("\n\nDigite os seguintes dados do aluno %d: ", i+1);
         printf("\n  Matricula: ");
         scanf ("%d", &novoAluno[i].matriculaAluno);
@@ -45,7 +45,7 @@ int main (){
     printf ("\n\n ---------------------------------------------------------------------\n");
     
     //Mostra os dados armazenados
-    for (int i=0; i<numAlunos;i++){
+    for (int i = 0; i < numAlunos; i++){
         printf("\n\n ALUNO %d", i+1);
         printf(" |  Matricula: %d", novoAluno[i].matriculaAluno);
         printf(" |  Sobrenome: %s", novoAluno[i].sobrenomeAluno);

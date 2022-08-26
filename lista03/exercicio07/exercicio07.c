@@ -34,7 +34,7 @@ int main()
     int *numPessoas = NULL, *i, *op, *palavra;
 
     //alocando memória
-    pBuffer = (void *) malloc(3*sizeof(int)+sizeof(char)*10); 
+    pBuffer = (void *) malloc(3 * sizeof(int) + sizeof(char) * 10); 
     if (pBuffer == NULL){
         printf("\n\n ERRO de alocacao de memoria!!");
         exit(1);
@@ -43,8 +43,8 @@ int main()
     //Definindo onde irá apontar cada ponteiro
     op = pBuffer;
     numPessoas = pBuffer + sizeof(int);
-    i = pBuffer + 2*sizeof(int);
-    palavra = pBuffer + 3*sizeof(int);
+    i = pBuffer + 2 * sizeof(int);
+    palavra = pBuffer + 3 * sizeof(int);
 
     //Inicializando váriaveis
     *op = 1;
@@ -62,7 +62,7 @@ int main()
         printf ("\n  4) Apagar ");
         printf ("\n  0) Sair ");
         printf ("\n Escolha uma opcao: ");
-        scanf ("%d",op);
+        scanf ("%d", op);
         switch (*op){
         case 1:
             adicionarPessoa(numPessoas);
@@ -93,15 +93,14 @@ void adicionarPessoa(int *numPessoas){
         fflush(stdin);
         printf("\n\nAdicione os seguintes dados: ");
         printf("\n Nome: ");
-        scanf("%s", pessoas[*numPessoas-1].nome);
+        scanf("%s", pessoas[*numPessoas - 1].nome);
 
         printf(" Idade: ");
-        scanf("%d", &pessoas[*numPessoas-1].idade);
+        scanf("%d", &pessoas[*numPessoas - 1].idade);
 
         printf(" Telefone: ");
-        scanf("%s", pessoas[*numPessoas-1].telefone);
-    }
-    else{
+        scanf("%s", pessoas[*numPessoas - 1].telefone);
+    } else{
         printf("\n\nERRO!\nO numero maximo de pessoas ja foi atingido");
     }
     
@@ -112,7 +111,7 @@ void mostrarPessoa(int *numPessoas, void *pBuffer, int *i){
     printf ("\n__________________________________");
     
     //Mostra os dados armazenados
-    for (*i=0; *i < *numPessoas; *i = *i + 1){
+    for (*i = 0; *i < *numPessoas; *i = *i + 1){
         printf("\n\n %d)", *i+1);
         printf("\n Nome: %s", pessoas[*i].nome);
         printf("\n Idade: %d", pessoas[*i].idade);
@@ -121,12 +120,12 @@ void mostrarPessoa(int *numPessoas, void *pBuffer, int *i){
 }
 
 void buscarPessoa(int *numPessoas, void *pBuffer, char *palavra, int *op, int *i){
-    *op=0;
+    *op = 0;
     printf("\nQual nome voce deseja buscar: ");
     scanf("%s", palavra);
-    for (*i=0; *i < *numPessoas; *i = *i + 1){
-        if (strcmp(pessoas[*i].nome, pBuffer + 3*sizeof(int)) == 0){
-            *op=1;
+    for (*i = 0; *i < *numPessoas; *i = *i + 1){
+        if (strcmp(pessoas[*i].nome, pBuffer + 3 * sizeof(int)) == 0){
+            *op = 1;
             printf("\n\n == O nome foi encontrado! ==\n");
             printf("\n Nome: %s", pessoas[*i].nome);
             printf("\n Idade: %d", pessoas[*i].idade);
@@ -140,17 +139,17 @@ void buscarPessoa(int *numPessoas, void *pBuffer, char *palavra, int *op, int *i
 }
 
 void apagarPessoa(int *numPessoas, void *pBuffer, char *palavra, int *op, int *i){
-    *op=0;
+    *op = 0;
     printf("\nDigite o nome a ser excluido: ");
     scanf("%s", palavra);
-    for (*i=0; *i < *numPessoas; *i = *i + 1){
-        if (strcmp(pessoas[*i].nome, pBuffer + 3*sizeof(int)) == 0){
-            *op=1;
+    for (*i = 0; *i < *numPessoas; *i = *i + 1){
+        if (strcmp(pessoas[*i].nome, pBuffer + 3 * sizeof(int)) == 0){
+            *op = 1;
         }
         if (*op == 1){
-            strcpy(pessoas[*i].nome, pessoas[*i+1].nome);
-            pessoas[*i].idade = pessoas[*i+1].idade;
-            strcpy(pessoas[*i].telefone, pessoas[*i+1].telefone);
+            strcpy(pessoas[*i].nome, pessoas[*i + 1].nome);
+            pessoas[*i].idade = pessoas[*i + 1].idade;
+            strcpy(pessoas[*i].telefone, pessoas[*i + 1].telefone);
         }
     }
     if (*op==1){
@@ -159,7 +158,7 @@ void apagarPessoa(int *numPessoas, void *pBuffer, char *palavra, int *op, int *i
     } 
     else{
         printf("\nPalavra não encontrada!\n");
-        *op=1;
+        *op = 1;
     }
 }
 

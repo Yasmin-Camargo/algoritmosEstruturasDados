@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-
-//NOME: Yasmin
-
+//NOME: Yasmin Souza Camargo
 //Exercício 26 - Lista 09 - Ponteiros
 /* Implemente uma funcao que calcule as raızes de uma equacao do segundo grau do tipo Ax2 + Bx + C = 0
 A variavel A tem que ser diferente de zero. 
@@ -15,16 +10,20 @@ Essa funcao deve ter como valor de retorno o nuumero de raızes reais e distinta
 equacao. Se existirem raızes reais, seus valores devem ser armazenados nas variaveis 
 apontadas por X1 e X2 */
 
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+
 //Escopo das funções
 int raizes (float a, float b, float c, float * x1, float * x2);
 
 int main (){
-    float valorA=0.0, valorB=0.0, valorC=0.0, *valorX1, *valorX2;
-    int valorRaizes=0;
+    float valorA = 0.0, valorB = 0.0, valorC = 0.0, *valorX1, *valorX2;
+    int valorRaizes = 0;
 
     //Alocando memoria
-    valorX1 = (float*)malloc(sizeof(float)); 
-    valorX2 = (float*)malloc(sizeof(float)); 
+    valorX1 = (float*) malloc(sizeof(float)); 
+    valorX2 = (float*) malloc(sizeof(float)); 
 
     //Testa se conseguiu alocar memória
     if (valorX1 == NULL){
@@ -50,23 +49,21 @@ int main (){
     }
     else{
         valorRaizes = raizes(valorA, valorB, valorC, valorX1, valorX2);
-        if (valorRaizes==1){
+        if (valorRaizes == 1){
             printf ("\n\nRESULTADO:");
             printf ("\n x = %.2f", *valorX1);
-        }
-        else if (valorRaizes==2){
+        } else if (valorRaizes==2){
             printf ("\n\nRESULTADO:");
             printf ("\n x' = %.2f", *valorX1);
             printf ("\n x'' = %.2f", *valorX2);
         }
     }
-
 }
 
 //Função que calcula a Bhaskara
 int raizes (float a, float b, float c, float * x1, float * x2){
-    float delta=0.0;
-    int numRaizes=0;
+    float delta = 0.0;
+    int numRaizes = 0;
 
     printf ("\n\n\nSendo a = %.2f, b = %.2f e c = %.2f\n", a,b,c);
 

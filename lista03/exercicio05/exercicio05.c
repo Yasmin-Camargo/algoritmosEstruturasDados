@@ -53,18 +53,18 @@ int main()
 void adicionarPessoa(int numPessoas){
     printf("\n\nDigite os seguintes dados da pessoa %d: ", numPessoas);
     printf("\n  Nome: ");
-    scanf ("%s", &novaPessoa[numPessoas-1].nome);
+    scanf ("%s", &novaPessoa[numPessoas - 1].nome);
     printf("  Idade: ");
-    scanf ("%d", &novaPessoa[numPessoas-1].idade);
+    scanf ("%d", &novaPessoa[numPessoas - 1].idade);
     printf("  Telefone: ");
-    scanf ("%s", &novaPessoa[numPessoas-1].telefone);
+    scanf ("%s", &novaPessoa[numPessoas - 1].telefone);
 }
 
 void mostrarPessoa(int numPessoas){
     printf ("\n\nRESUMO");
     for (int i = 0; i < numPessoas; i++){
         printf ("\n__________________________________");
-        printf("\n\n %d)", i+1);
+        printf("\n\n %d)", i + 1);
         printf("\n Nome: %s", novaPessoa[i].nome);
         printf("\n Idade: %d", novaPessoa[i].idade);
         printf("\n Telefone %s", novaPessoa[i].telefone);
