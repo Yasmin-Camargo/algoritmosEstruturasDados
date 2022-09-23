@@ -5,17 +5,17 @@
  AABCCBAA - sim
  ADDFDDA - sim
  ABFFBB - não
-O usuário digita uma letra e tecla enter, até que digite x  e enter para terminar a sequencia
+O usuário digita uma letra e tecla enter, até que digite x e enter para terminar a sequencia
 Implemente a função POP e PUSH de pilha e resolva o problema com elas */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 
-#define MAX 20
 typedef struct{
-	char sequencia[MAX];
+	char *sequencia;
 	int base;
 	int topo;
 	int limite;
@@ -26,23 +26,23 @@ Pilha *RESET();
 void PUSH(Pilha *minhaPilha, char letraDigitada);
 char POP(Pilha *minhaPilha);
 void CLEAR(Pilha *minhaPilha);
-
 int TestaPalindromo(Pilha *novaPilha, Pilha *novaPilha2, int metade, int par);
 
 int main()
 {
-	char letra[3];
+	char letra;
 	int metade = 0, teste = 0;
 	Pilha *novaPilha;
 
 	novaPilha = RESET();
 
-	while (letra[0] != 'x'){
+	while (letra != 'x'){
 		printf(" Digite uma letra: ");
-		scanf("%s", letra);
-		letra[0] = tolower(letra[0]);
-		if (letra[0] != 'x'){
-			PUSH (novaPilha, letra[0]);
+		fflush(stdin);
+		scanf("%c", &letra);
+		letra = tolower(letra);
+		if (letra != 'x'){
+			PUSH (novaPilha, letra);
 		}
 	}
 
@@ -72,20 +72,25 @@ int main()
 Pilha *RESET(){
 	Pilha *minhaPilha;
 	minhaPilha = malloc(sizeof(Pilha));
+	minhaPilha->sequencia = malloc(sizeof(char));
+	minhaPilha->sequencia = NULL;
 	minhaPilha->base = 0;
 	minhaPilha->topo = 0;
-	minhaPilha->limite = MAX;
+	minhaPilha->limite = 0;
 
 	return minhaPilha;
 }
 
 void PUSH(Pilha *minhaPilha, char letraDigitada){
-	if (minhaPilha->topo == minhaPilha->limite){
+	minhaPilha->sequencia = (char *)(realloc(minhaPilha->sequencia, sizeof(char) * (minhaPilha->topo + 1) + sizeof(char)));
+	if (minhaPilha->sequencia == NULL){
 		printf("A pilha esta cheia");
 	}
 	else{
 		minhaPilha->sequencia[minhaPilha->topo] = letraDigitada;
 		minhaPilha->topo++;
+		minhaPilha->limite = 0;
+		minhaPilha->base = 0;
 	}
 }
 
@@ -96,6 +101,7 @@ char POP(Pilha *minhaPilha){
 	}
 	else{
 		dadoRemovido = minhaPilha->sequencia[minhaPilha->topo - 1];
+		minhaPilha->sequencia[minhaPilha->topo - 1] = ' ';
 		minhaPilha->topo--;
 	}
 	return dadoRemovido;
