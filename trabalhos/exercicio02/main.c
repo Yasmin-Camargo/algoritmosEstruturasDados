@@ -91,6 +91,7 @@ void PUSH(Pilha *minhaPilha, char letraDigitada){
 		minhaPilha->topo++;
 		minhaPilha->limite = 0;
 		minhaPilha->base = 0;
+		minhaPilha->sequencia[minhaPilha->topo] = '\0';
 	}
 }
 
@@ -100,9 +101,12 @@ char POP(Pilha *minhaPilha){
 		printf("A pilha esta vazia");
 	}
 	else{
+		printf("\n==>%s", minhaPilha->sequencia);
 		dadoRemovido = minhaPilha->sequencia[minhaPilha->topo - 1];
-		minhaPilha->sequencia[minhaPilha->topo - 1] = ' ';
+		minhaPilha->sequencia[minhaPilha->topo - 1] = '\0';
 		minhaPilha->topo--;
+		minhaPilha->sequencia = (char *)(realloc(minhaPilha->sequencia, sizeof(char) * (minhaPilha->topo + 1) + sizeof(char)));
+		printf("\n==>%s", minhaPilha->sequencia);
 	}
 	return dadoRemovido;
 }
