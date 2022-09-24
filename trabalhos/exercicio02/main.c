@@ -30,7 +30,7 @@ int TestaPalindromo(Pilha *novaPilha, Pilha *novaPilha2, int metade, int par);
 
 int main()
 {
-	char letra;
+	char letra="";
 	int metade = 0, teste = 0;
 	Pilha *novaPilha;
 
@@ -70,9 +70,8 @@ int main()
 }
 
 Pilha *RESET(){
-	Pilha *minhaPilha;
-	minhaPilha = malloc(sizeof(Pilha));
-	minhaPilha->sequencia = malloc(sizeof(char));
+	Pilha *minhaPilha = (Pilha *) (malloc(sizeof(Pilha)));
+	minhaPilha->sequencia;
 	minhaPilha->sequencia = NULL;
 	minhaPilha->base = 0;
 	minhaPilha->topo = 0;
@@ -101,17 +100,16 @@ char POP(Pilha *minhaPilha){
 		printf("A pilha esta vazia");
 	}
 	else{
-		printf("\n==>%s", minhaPilha->sequencia);
 		dadoRemovido = minhaPilha->sequencia[minhaPilha->topo - 1];
 		minhaPilha->sequencia[minhaPilha->topo - 1] = '\0';
 		minhaPilha->topo--;
 		minhaPilha->sequencia = (char *)(realloc(minhaPilha->sequencia, sizeof(char) * (minhaPilha->topo + 1) + sizeof(char)));
-		printf("\n==>%s", minhaPilha->sequencia);
 	}
 	return dadoRemovido;
 }
 
 void CLEAR(Pilha *minhaPilha){
+    free(minhaPilha->sequencia);
     free(minhaPilha);
 }
 

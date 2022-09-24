@@ -1,0 +1,64 @@
+Dr. Memory version 2.5.0 build 0 built on Oct 18 2021 03:10:43
+Windows version: WinVer=105;Rel=2009;Build=22000;Edition=Core
+Dr. Memory results for pid 16264: "main.exe"
+Application cmdline: "C:\Users\carol\Downloads\YASMIN\exercicio02\main.exe"
+Recorded 124 suppression(s) from default C:\Program Files (x86)\Dr. Memory\bin\suppress-default.txt
+
+Error #1: UNINITIALIZED READ: reading register eax
+# 0 KERNELBASE.dll!FindNextFileW        +0x20e    (0x75be14ce <KERNELBASE.dll+0x1214ce>)
+# 1 KERNELBASE.dll!FindNextFileA        +0x33     (0x75c15124 <KERNELBASE.dll+0x155124>)
+# 2 .text   
+# 3 __mingw_glob
+# 4 _setargv
+# 5 .text   
+# 6 ntdll.dll!RtlGetFullPathName_UEx    +0x4c1    (0x77728fd2 <ntdll.dll+0x68fd2>)
+# 7 ntdll.dll!RtlGetFullPathName_UEx    +0x48c    (0x77728f9d <ntdll.dll+0x68f9d>)
+Note: @0:00:00.187 in thread 6196
+Note: instruction: cmp    %eax $0x0000001a
+
+Error #2: UNINITIALIZED READ: reading register eax
+# 0 KERNELBASE.dll!FindNextFileW        +0x23b    (0x75be14fb <KERNELBASE.dll+0x1214fb>)
+# 1 KERNELBASE.dll!FindNextFileA        +0x33     (0x75c15124 <KERNELBASE.dll+0x155124>)
+# 2 .text   
+# 3 __mingw_glob
+# 4 _setargv
+# 5 .text   
+# 6 ntdll.dll!RtlGetFullPathName_UEx    +0x4c1    (0x77728fd2 <ntdll.dll+0x68fd2>)
+# 7 ntdll.dll!RtlGetFullPathName_UEx    +0x48c    (0x77728f9d <ntdll.dll+0x68f9d>)
+Note: @0:00:00.187 in thread 6196
+Note: instruction: data16 mov    %cx -> 0x00000234(%ebx,%eax,2)
+
+Error #3: UNINITIALIZED READ: reading register eax
+# 0 KERNELBASE.dll!FindNextFileW        +0x167    (0x75be1427 <KERNELBASE.dll+0x121427>)
+# 1 KERNELBASE.dll!FindNextFileA        +0x33     (0x75c15124 <KERNELBASE.dll+0x155124>)
+# 2 .text   
+# 3 __mingw_glob
+# 4 _setargv
+# 5 .text   
+# 6 ntdll.dll!RtlGetFullPathName_UEx    +0x4c1    (0x77728fd2 <ntdll.dll+0x68fd2>)
+# 7 ntdll.dll!RtlGetFullPathName_UEx    +0x48c    (0x77728f9d <ntdll.dll+0x68f9d>)
+Note: @0:00:00.203 in thread 6196
+Note: instruction: test   %eax %eax
+
+===========================================================================
+FINAL SUMMARY:
+
+DUPLICATE ERROR COUNTS:
+	Error #   1:      5
+	Error #   2:      5
+
+SUPPRESSIONS USED:
+
+ERRORS FOUND:
+      0 unique,     0 total unaddressable access(es)
+      3 unique,    11 total uninitialized access(es)
+      0 unique,     0 total invalid heap argument(s)
+      0 unique,     0 total GDI usage error(s)
+      0 unique,     0 total handle leak(s)
+      0 unique,     0 total warning(s)
+      0 unique,     0 total,      0 byte(s) of leak(s)
+      0 unique,     0 total,      0 byte(s) of possible leak(s)
+ERRORS IGNORED:
+      7 unique,     7 total,   4496 byte(s) of still-reachable allocation(s)
+         (re-run with "-show_reachable" for details)
+Details: C:\Users\carol\AppData\Roaming\Dr. Memory\DrMemory-main.exe.16264.000\results.txt
