@@ -1,18 +1,4 @@
 //NOME: Yasmin Souza Camargo
-/*
-    --- TRABALHO AGENDA ---
-    Nenhuma variável pode ser declarada em todo o programa, somente ponteiros. Todos os dados do programa devem ser guardados dentro do pBuffer.
-    Nem mesmo como parâmetro de função. Só ponteiros que apontam para dentro do pBuffer.
-    Exemplo do que não pode: int c; char a; int v[10]; void Funcao(int parametro)
-    Não pode usar struct em todo o programa.
-    Usar fila ordenada (heap) para armazenar as pessoas em ordem alfabética sempre que o usuário incluir uma nova pessoa.
-    Implementar a base de dados da agenda usando lista duplamente ligada
-    Somente essa base de dados pode ficar fora do buffer principal, ou seja, pode usar um malloc para cada nodo.
-*/
-
-//OBSERVAÇOES:
-//Utilização da técnica tripleref
-//Fila de prioridade por Nome
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -22,11 +8,13 @@
 //Escopo das funções
 char *NEWELEMENT(char *nome, int *idade, char *telefone);
 void RESET(char *start, char *last, int *numPessoas);
-void PUSH(char **tracer, char *newp);
+void PUSH(char **tracer, char *newp, int *numPessoas);
 void PRINT(char **tracer);
 void SEARCH(char **tracer, char *nome, int *achou);
-void POP(char **tracer);
+char *POP(char **tracer, char *nomeRemovido, int *numPessoas);
 void CLEAR(char **tracer);
+
+char *last = NULL, *start = NULL;
 
 //TAMANHOS NA STRUCT
 #define IDADE (sizeof(char) * 10 + sizeof(char))
@@ -39,10 +27,10 @@ int main()
     //Ponteiros
     void *pBuffer = NULL; 
     int *numPessoas = NULL, *op = NULL, *idadeTemp = NULL;
-	char *nomeTemp = NULL, *telefoneTemp = NULL, *start = NULL, *last = NULL;
+	char *nomeTemp = NULL, *telefoneTemp = NULL;
 
     //Alocando memória
-    pBuffer = (void *) (malloc(3 * sizeof(int) + (sizeof(char) * 10 + 1) + (sizeof(char) * 11 + 1))); 
+    pBuffer = (void *) (malloc(3 * sizeof(int) + (sizeof(char) * 10 + 1) + (sizeof(char) * 20 + 1))); 
     if (pBuffer == NULL){
         printf("\n\n ERRO de alocacao de memoria!!");
         exit(1);
@@ -61,7 +49,7 @@ int main()
     *idadeTemp = 0;
     strcpy(telefoneTemp," ");
 
-    RESET(start, last, numPessoas);
+    RESET(start, last, numPessoas); //Seta valores
 
     while (*op != 0){
         printf ("\n\n ----------------------------");
@@ -77,7 +65,6 @@ int main()
         printf ("\n ----------------------------  ");
         switch (*op){
         case 1:
-            *numPessoas = *numPessoas + 1;
             //Adicinando dados
             fflush(stdin);
             printf("\n\nAdicione os seguintes dados: ");
@@ -88,14 +75,14 @@ int main()
             printf(" Telefone: ");
             scanf("%s", telefoneTemp);
             //Verifica se o telefone digitado possui 11 digitos
-            if (strlen(telefoneTemp) > 11){
-                while (strlen(telefoneTemp) > 11){
+            if (strlen((char *) (telefoneTemp)) > 11){
+                while (strlen((char *) (telefoneTemp)) > 11){
                     printf("\n\n ATENCAO \n O telefone e um numero de 11 digitos (51999999999)\nPor favor tente novamente\n");
                     printf(" Telefone: ");
                     scanf("%s", telefoneTemp);
                 }
             }
-            PUSH(&start, NEWELEMENT(nomeTemp,idadeTemp,telefoneTemp));
+            PUSH(&start, NEWELEMENT(nomeTemp, idadeTemp, telefoneTemp), numPessoas); 
             break;
 
         case 2:
@@ -104,22 +91,24 @@ int main()
             PRINT(&start);
             break;
 
-        case 3: 
+        case 3:   
             printf("\n Digite o nome que deseja buscar: ");
             scanf("%s", nomeTemp);
             *idadeTemp = 0;
             SEARCH(&start, nomeTemp, idadeTemp);
             break;
+
         case 4:
-            POP(&start);
-            *numPessoas = *numPessoas - 1;
+            printf("\n\n Nome removido: %s", POP(&start, nomeTemp, numPessoas));
             break;
+
         case 0:
             printf("\n\n Saindo...\n");
             CLEAR(&start);
             free (pBuffer);
 			return (0);
             break;
+
         default:
             printf("\n\n\n OPCAO INVALIDA!!! Por favor, tente novamente\n");
             break;
@@ -135,7 +124,8 @@ void RESET(char *start, char *last, int *numPessoas){
     *numPessoas = 0;
 }
 
-char *NEWELEMENT(char *nome, int *idade, char *telefone) //Cria e coloca elementos no Buffer
+//Cria o buffer e atribui os dados
+char *NEWELEMENT(char *nome, int *idade, char *telefone) 
 {
     void *pBuferPessoa = NULL;
     pBuferPessoa = (void *) (malloc(PREVIOUS + sizeof(char**)));
@@ -154,28 +144,31 @@ char *NEWELEMENT(char *nome, int *idade, char *telefone) //Cria e coloca element
     return (pBuferPessoa);
 }
 
-void PUSH(char **tracer, char *newp){ //Conecta buffer na fila seguindo a ordem de prioridade
-    char *temp = *tracer;
-    while(((*tracer) != NULL) && strcmp(*tracer, newp) < 1){
-        temp = *tracer;
-		tracer = (char **)(*tracer + NEXT);
+//Conecta buffer na fila seguindo a ordem de prioridade e faz as conexões
+void PUSH(char **tracer, char *newp, int *numPessoas){ 
+    char *temp = *tracer;  
+    *numPessoas = *numPessoas + 1;
+    while(((*tracer) != NULL) && strcmp(*tracer, newp) < 1){ //Primeiro verifica se tracer aponta para algum lugar e procura até encontrar o local onde o novo elemento deve ser adicionado
+		tracer = (char **)(*tracer + NEXT); //Próximo elemento é o que está no next
 	}
-    printf("\n%s", (char **)(newp));
   
-    *(char **)(newp + NEXT) = *tracer;
-    *tracer = newp;
-   
+    //Obs: Nesse momento *tracer pode ser o endereço que start esta apontando ou o endereço que está no next do elemento anterior
+    *(char **)(newp + NEXT) = *tracer;  //Atualiza o next do elemento adicionado 
+    *tracer = newp; // Atualiza quem já estava na fila antes
+    
     //Atualizando previous
     tracer = &temp;
     while (*tracer != NULL) {
-		temp = *tracer; 
+		temp = *tracer;  //guarda elemento anterior
 		tracer = (char **)(*tracer + NEXT);
 		if (*tracer != NULL) { 
-			*(char **)(*tracer + PREVIOUS) = (char *)(temp);
+			*(char **)(*tracer + PREVIOUS) = (char *)(temp); //previus do elemento posterior aponta para o anterior
 		}
 	}
+    last = (char *)(temp); //atualiza último elemento
 }
 
+//Mostra todos elementos da fila
 void PRINT(char **tracer){
 	while (*tracer) {
 		printf("\nNOME: %s \n", (char **)(*tracer));
@@ -185,6 +178,7 @@ void PRINT(char **tracer){
 	}
 }
 
+//Percorre a fila e procura se existe o elemento
 void SEARCH(char **tracer, char *nome, int *achou){
     *achou = 0;
     while(((*tracer) != NULL)){
@@ -206,30 +200,37 @@ void SEARCH(char **tracer, char *nome, int *achou){
     else{
         printf("\n\n\n PALAVRA NAO FOI ENCONTRADA!!!");
     }
-   
-    //printf("\nNOME: %s \n", (char **)(*tracer));
-    //printf("IDADE: %d \n", *(char **)(*tracer + IDADE));
-    //printf("TELEFONE: %s \n", (char **)(*tracer + TELEFONE));
 }
 
-void POP(char **tracer){
+//Remove elemento do inicio
+char *POP(char **tracer, char *nomeRemovido, int *numPessoas){
+    char *temp, *temp2;
+
+    temp2 = *tracer; 
     if ((*tracer) != NULL){
-        char **head = tracer;
-        *tracer = *(char **)(*tracer + NEXT);
-        //free(head);
+        strcpy(nomeRemovido, (char *)(*tracer)); //armazena o nome que vai ser removido
+        temp = *(char **)(temp2 + NEXT); //guarda o próximo elemento
+		free(temp2);
+        *tracer = temp; //Atualiza tracer
+        if ((*tracer == NULL)){ //Atualiza last para NULL quando removeu todos elementos
+            last = NULL;
+        }
+        *numPessoas = *numPessoas - 1;
     } else {
+        strcpy(nomeRemovido, "-");
         printf ("\n\n Nao existe nenhum elemento para ser removido");
-    }   
-
+    }
+    return(nomeRemovido);
 }
 
+//Libera espaço alocado
 void CLEAR(char **tracer){
     char *temp2, *temp;
 	
     temp2 = *tracer;
-	while ( temp2 != NULL ) {
-		temp = *(char **)( temp2 + NEXT );
-		free( temp2 );
-		temp2 = temp;
+	while (temp2 != NULL) {
+		temp = *(char **)(temp2 + NEXT); //guarda o próximo elemento
+		free(temp2); //libera memória
+		temp2 = temp; //atualiza o próximo a ser removido
 	}
 }
