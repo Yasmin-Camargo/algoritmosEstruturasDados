@@ -16,7 +16,7 @@ void CLEAR(char **tracer);
 
 char *last = NULL, *start = NULL;
 
-//TAMANHOS NA STRUCT
+//LOCALIZAÇÃO DOS DADOS NO BUFFER 
 #define IDADE (sizeof(char) * 10 + sizeof(char))
 #define TELEFONE (sizeof(char) * 10 + sizeof(char) + sizeof(int))
 #define NEXT (sizeof(char) * 10 + sizeof(char) + sizeof(int) + sizeof(char) * 11 + sizeof(char))
@@ -210,10 +210,13 @@ char *POP(char **tracer, char *nomeRemovido, int *numPessoas){
     if ((*tracer) != NULL){
         strcpy(nomeRemovido, (char *)(*tracer)); //armazena o nome que vai ser removido
         temp = *(char **)(temp2 + NEXT); //guarda o próximo elemento
-		free(temp2);
-        *tracer = temp; //Atualiza tracer
-        if ((*tracer == NULL)){ //Atualiza last para NULL quando removeu todos elementos
-            last = NULL;
+		free(temp2); 
+        *tracer = temp; //Atualiza tracer (start)
+        if ((*tracer == NULL)){ 
+            last = NULL; //Atualiza last para NULL quando removeu todos elementos
+        }
+        else{
+            *(char **)(*tracer + PREVIOUS) = NULL; //Atualiza previus quando ainda não removeu todos elementos
         }
         *numPessoas = *numPessoas - 1;
     } else {
