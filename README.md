@@ -17,5 +17,8 @@ https://programacaodescomplicada.wordpress.com/complementar/
 ### listas
 Exercicios para entregar cobrados pela discplina
 
+### trabalhosExtras
+Tarefas e trabalhos extras realizados ao longo da discplina
+
 ### trabalhos
 Trabalhos avaliativos da discplina
