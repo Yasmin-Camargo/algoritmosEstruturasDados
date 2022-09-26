@@ -27,33 +27,8 @@ Essa funcao deve ter como valor de retorno o nuumero de raızes reais e distinta
 equacao. Se existirem raızes reais, seus valores devem ser armazenados nas variaveis 
 apontadas por X1 e X2
 
-### lista01
-#### exercicio01
-Criar um projeto "Olá Mundo" em C no Visual Code e usando o debug com um breakpoint no printf
+#### Fila
+Criar uma fila estática e uma dinâmica com as funções de Reset, Push, Pop, Clear e Print
 
-#### exercicio02
-Faça um programa que armazena nomes. O programa deve armazenar
-todos os nomes na mesma string. O tamanho da string deve crescer e diminuir
-conforme nomes forem colocados ou removidos. Não pode ter desperdício de memória.
-
-### lista02
-#### exercicio03
-Faça uma agenda capaz de incluir, apagar, buscar e listar quantas pessoas o usuário desejar, porém, toda a informação incluída na agenda deve ficar num único lugar chamado: “void *pBuffer”.
-- Não pergunte para o usuário quantas pessoas ele vai incluir.
-- Não pode alocar espaço para mais pessoas do que o necessário.
-- Cada pessoa tem nome[10], idade e telefone.
-
-### lista03
-#### exercicio05
-Faça um programa que armazene a informação de várias pessoas.
-O programa só deve sair quando o usuário disser que não deseja mais entrar com os dados de outra pessoa.
-Antes de sair o programa deve apresentar, de forma organizada, os dados de todas as pessoas
-
-#### exercicio07
-Inverso do exercício 03 da lista 02
-O programa deve armazenar no máximo 10 pessoas
-Todas as variáveis que forem usadas no programa deve ser ponteiros. A única exceção é o item 1 que deve ser uma variável global Pessoa pessoas[10].
-Os ponteiros devem apontar para um buffer chamado pBuffer onde os dados devem
-ser armazenados. Por exemplo, um contador para um for deve ser um ponteiro para
-int e o int vai ficar armazenado dentro de pBuffer
-Não pode usar struct dentro do pBuffer
+#### Pilha
+Criar uma pilha com as funções de Reset, Push, Pop, Clear e Print
