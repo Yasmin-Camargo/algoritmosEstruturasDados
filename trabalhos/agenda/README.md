@@ -24,8 +24,10 @@ https://drive.google.com/file/d/1sVDNOQReo6TttVQqRUau5RQoeEKOGZeo/view?usp=shari
 - Fila de prioridade por Nome
 
 ### Lista de testes
+https://github.com/Yasmin-Camargo/algoritmosEstruturasDados/tree/main/trabalhos/agenda/testes
 1) Adiciona 10 pessoas, lista, remove 4 pessoas, lista, busca uma pessoa que existe, busca outra que não existe, encerra;
 2) Adiciona 3 pessoas, lista, busca as tres, busca uma que não existe, remove todas, busca uma que existia, encerra
 3) Lista, adiciona 5 pessoas, lista, remove todas, remove mais uma, lista, busca, adiciona mais duas, lista, busca, encerra
 
 ### Resultados do teste Dr Memory
+https://github.com/Yasmin-Camargo/algoritmosEstruturasDados/tree/main/trabalhos/agenda/resultados-DRMemory
