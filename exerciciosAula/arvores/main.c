@@ -25,6 +25,7 @@ void PUSH(Arvore **tracer, Arvore *newp);
 void imprimirPreOrdem(Arvore *minhaArvore);
 void imprimirOrdem(Arvore *minhaArvore);
 void imprimirPosOrdem(Arvore *minhaArvore);
+Arvore *search(Arvore **tracer, char *chave);
 
 int main()
 {
@@ -103,8 +104,20 @@ int main()
 			}
             break;
 
-        case 3:   
-		
+        case 3:      
+            printf("\n Digite a chave que voce deseja buscar: ");
+            scanf("%s", tempNome);
+            
+            Arvore *busca;
+            busca = search (&raiz, tempNome);
+            if (busca == NULL){
+                printf("\n\n DADO NAO FOI ENCONTRADO");
+            } else{
+                printf("\n\n Objeto foi encontrado: ");
+                printf("\n nome: %s", busca->nome);
+                printf("\n idade: %d", busca->idade);
+                printf("\n telefone: %s", busca->telefone);
+            }
             break;
 
         case 4:
@@ -215,4 +228,27 @@ void imprimirPosOrdem(Arvore *minhaArvore){
 		imprimirPosOrdem(minhaArvore->direita);
 		printf(" %s, ", minhaArvore->chave);
 	}
+}
+
+Arvore *search(Arvore **tracer, char *chave){
+    int encontrou = 0;
+    while((*tracer)){
+        if (strcmp(chave, (*tracer)->chave) == 0){
+            encontrou = 1;
+            break;
+        }
+        else{
+            if (strcmp(chave, (*tracer)->chave) > 0){
+                tracer = &((*tracer)->direita);
+            } else{
+                tracer = &((*tracer)->esquerda);
+            }
+        }
+    }
+
+    if (encontrou == 1){
+        return *tracer;
+    } else{
+        return NULL;
+    }
 }
