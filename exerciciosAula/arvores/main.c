@@ -12,27 +12,33 @@ typedef struct{
 	char *nome;
 	int idade;
 	char *telefone; 
-	struct Arvore *esquerda; 
-	struct Arvore *direita;  
+	struct Nodo *esquerda; 
+	struct Nodo *direita;  
+}Nodo;
+
+typedef struct{
+	Nodo *raiz;
+	int numNodos;
+	char fatorPrecedencia;
 }Arvore;
 
-Arvore *raiz = NULL;
-int numPessoas = 0;
 
 //Escopo de funções
-Arvore *newNodo(char nome[], int idade, char telefone[], int fatorPrecedencia);
-void PUSH(Arvore **tracer, Arvore *newp);
-void imprimirPreOrdem(Arvore *minhaArvore);
-void imprimirOrdem(Arvore *minhaArvore);
-void imprimirPosOrdem(Arvore *minhaArvore);
-Arvore *search(Arvore **tracer, char *chave);
+Arvore *Reset(Arvore *novaArvore);
+Nodo *newNodo(char nome[], int idade, char telefone[], int fatorPrecedencia);
+void PUSH(Nodo **tracer, Nodo *newp);
+void imprimirPreOrdem(Nodo *minhaArvore);
+void imprimirOrdem(Nodo *minhaArvore);
+void imprimirPosOrdem(Nodo *minhaArvore);
+Nodo *search(Nodo **tracer, char *chave);
 
 int main()
 {
+	Arvore *minhaArvore = NULL;
 	int op = 1, fatorPrecedencia = 0, imprimir = 0, tempIdade = 0;
 	char tempNome[30], tempTelefone[20];
 
-	numPessoas = 0;
+	minhaArvore = Reset(minhaArvore);
 	
 	do {
 		printf ("\n\n ----------------------------\n");
@@ -65,9 +71,9 @@ int main()
             scanf("%d", &tempIdade);
             printf(" Telefone: ");
             scanf("%s", tempTelefone);
-			PUSH(&raiz, newNodo(tempNome, tempIdade, tempTelefone, fatorPrecedencia));
+			PUSH(&(minhaArvore->raiz), newNodo(tempNome, tempIdade, tempTelefone, fatorPrecedencia));
 			
-			printf("\n\nNome: %s, Idade: %d, telefone: %s", raiz->nome, raiz->idade, raiz->telefone);
+			
             break;
 
         case 2:
@@ -81,17 +87,17 @@ int main()
 			switch(imprimir){
 				case 1:
 					printf("\n\n  PRE-ORDEM:\n  ");
-					imprimirPreOrdem(raiz);
+					imprimirPreOrdem(minhaArvore->raiz);
 				break;
 
 				case 2:
 					printf("\n\n  ORDEM:\n  ");
-					imprimirOrdem(raiz);
+					imprimirOrdem(minhaArvore->raiz);
 				break;
 
 				case 3:
 					printf("\n\n  POS-ORDEM:\n  ");
-					imprimirPosOrdem(raiz);
+					imprimirPosOrdem(minhaArvore->raiz);
 				break;
 
 				case 4:
@@ -108,8 +114,8 @@ int main()
             printf("\n Digite a chave que voce deseja buscar: ");
             scanf("%s", tempNome);
             
-            Arvore *busca;
-            busca = search (&raiz, tempNome);
+            Nodo *busca;
+            busca = search (&(minhaArvore->raiz), tempNome);
             if (busca == NULL){
                 printf("\n\n DADO NAO FOI ENCONTRADO");
             } else{
@@ -137,11 +143,21 @@ int main()
     }
 }
 
+Arvore *Reset(Arvore *novaArvore){
+	novaArvore = (Arvore *)(malloc(sizeof(Arvore)));
+	novaArvore->numNodos = 0;
+	novaArvore->raiz = NULL;
+	return novaArvore;
+}
 
-Arvore *newNodo(char nome[], int idade, char telefone[], int fatorPrecedencia){
-	Arvore *novoNodo = (Arvore *) (malloc(sizeof(Arvore)));
-	novoNodo->nome = (char *) (malloc(sizeof(strlen(nome) * sizeof(char)) + sizeof(char)));
-	novoNodo->telefone = (char *) (malloc(sizeof(strlen(telefone) * sizeof(char)) + sizeof(char)));
+Nodo *newNodo(char nome[], int idade, char telefone[], int fatorPrecedencia){
+	Nodo *novoNodo = (Nodo *) (malloc(sizeof(Nodo)));
+	novoNodo->nome = (char *) (malloc(sizeof(nome)));
+	novoNodo->telefone = (char *) (malloc(sizeof(telefone)));
+	if (novoNodo == NULL || novoNodo->nome == NULL || novoNodo->telefone == NULL){
+		printf("Erro de alocacao de memoria");
+		exit(1);
+	}
 
 	novoNodo->direita = NULL;
 	novoNodo->esquerda = NULL;
@@ -151,23 +167,23 @@ Arvore *newNodo(char nome[], int idade, char telefone[], int fatorPrecedencia){
 
 	//defindo a chave a ser utilizada
 	if (fatorPrecedencia == 1){
-		novoNodo->chave = (char *) (malloc(sizeof(char) * strlen(nome) + sizeof(char)));
+		novoNodo->chave = (char *) (malloc(sizeof(nome)));
 		if (novoNodo->chave == NULL){
-			printf ("\n ERRO de alocacao!!");
+			printf("Erro de alocacao de memoria");
 			exit (1);
 		}
 		strcpy(novoNodo->chave, nome);
 	} else if (fatorPrecedencia == 2){
-		novoNodo->chave = (char *) (malloc(sizeof(char) * 2 + sizeof(char)));
+		novoNodo->chave = (char *) (malloc(sizeof(telefone)));
 		if (novoNodo->chave == NULL){
-			printf ("\n ERRO de alocacao!!");
+			printf("Erro de alocacao de memoria");
 			exit (1);
 		}
 		sprintf(novoNodo->chave, "%d", idade); //Converte idade para string
-	} else{
+	} else {
 		novoNodo->chave = (char *) (malloc(sizeof(char) * strlen(telefone) + sizeof(char)));
 		if (novoNodo->chave == NULL){
-			printf ("\n ERRO de alocacao!!");
+			printf("Erro de alocacao de memoria");
 			exit (1);
 		}
 		strcpy(novoNodo->chave, telefone);
@@ -177,9 +193,9 @@ Arvore *newNodo(char nome[], int idade, char telefone[], int fatorPrecedencia){
 }
 
 
-void PUSH(Arvore **tracer, Arvore *newp){
-	int posicao = 0;
-	if (raiz == NULL){	//Primeira pessoa a ser inserida
+void PUSH(Nodo **tracer, Nodo *newp){
+	Nodo **temp = tracer;
+	if (*temp == NULL){	//Primeira pessoa a ser inserida
 		*tracer = newp;
 	}
 	else {
@@ -189,15 +205,21 @@ void PUSH(Arvore **tracer, Arvore *newp){
 					(*tracer)->direita = newp;
 					break;
 				} else{	//Continua percorrendo a árvore
-					tracer = &((*tracer)->direita);
+					tracer = &(*tracer)->direita;
 				}
 			}
 			else {
+				printf ("ESQUERDA %s", (*tracer)->esquerda);
+				printf ("\n  1)");
 				if((*tracer)->esquerda == NULL){
+					printf ("\n  2)");
 					(*tracer)->esquerda = newp;
+					printf ("\n  3)");
 					break;
 				} else{
-					tracer = &((*tracer)->esquerda);
+					printf ("\n  4)");
+					tracer = &(*tracer)->esquerda;
+					printf ("\n  5)");
 				}
 			}
 		}
@@ -206,7 +228,7 @@ void PUSH(Arvore **tracer, Arvore *newp){
 }
 
 
-void imprimirPreOrdem(Arvore *minhaArvore){
+void imprimirPreOrdem(Nodo *minhaArvore){
 	if (minhaArvore){
 		printf("%s, ", minhaArvore->chave);
 		imprimirPreOrdem(minhaArvore->esquerda);
@@ -214,7 +236,7 @@ void imprimirPreOrdem(Arvore *minhaArvore){
 	}
 }
 
-void imprimirOrdem(Arvore *minhaArvore){
+void imprimirOrdem(Nodo *minhaArvore){
 	if (minhaArvore){
 		imprimirOrdem(minhaArvore->esquerda);
 		printf("%s, ", minhaArvore->chave);
@@ -222,7 +244,7 @@ void imprimirOrdem(Arvore *minhaArvore){
 	}
 }
 
-void imprimirPosOrdem(Arvore *minhaArvore){
+void imprimirPosOrdem(Nodo *minhaArvore){
 	if (minhaArvore){
 		imprimirPosOrdem(minhaArvore->esquerda);
 		imprimirPosOrdem(minhaArvore->direita);
@@ -230,7 +252,7 @@ void imprimirPosOrdem(Arvore *minhaArvore){
 	}
 }
 
-Arvore *search(Arvore **tracer, char *chave){
+Nodo *search(Nodo **tracer, char *chave){
     int encontrou = 0;
     while((*tracer)){
         if (strcmp(chave, (*tracer)->chave) == 0){
@@ -239,9 +261,9 @@ Arvore *search(Arvore **tracer, char *chave){
         }
         else{
             if (strcmp(chave, (*tracer)->chave) > 0){
-                tracer = &((*tracer)->direita);
+                tracer = &(*tracer)->direita;
             } else{
-                tracer = &((*tracer)->esquerda);
+                tracer = &(*tracer)->esquerda;
             }
         }
     }
