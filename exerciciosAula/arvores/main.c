@@ -31,6 +31,7 @@ void imprimirPreOrdem(Nodo *minhaArvore);
 void imprimirOrdem(Nodo *minhaArvore);
 void imprimirPosOrdem(Nodo *minhaArvore);
 Nodo *search(Nodo **tracer, char *chave);
+void Pop(Nodo **tracer, char *chave);
 
 int main()
 {
@@ -99,14 +100,6 @@ int main()
 					printf("\n\n  POS-ORDEM:\n  ");
 					imprimirPosOrdem(minhaArvore->raiz);
 				break;
-
-				case 4:
-					
-				break;
-
-				case 5:
-					
-				break;
 			}
             break;
 
@@ -127,7 +120,9 @@ int main()
             break;
 
         case 4:
-		
+			printf("\n Digite a chave que voce deseja excluir: ");
+            scanf("%s", tempNome);
+			Pop(&(minhaArvore->raiz), tempNome);
             break;
 
         case 0:
@@ -209,17 +204,11 @@ void PUSH(Nodo **tracer, Nodo *newp){
 				}
 			}
 			else {
-				printf ("ESQUERDA %s", (*tracer)->esquerda);
-				printf ("\n  1)");
 				if((*tracer)->esquerda == NULL){
-					printf ("\n  2)");
 					(*tracer)->esquerda = newp;
-					printf ("\n  3)");
 					break;
 				} else{
-					printf ("\n  4)");
 					tracer = &(*tracer)->esquerda;
-					printf ("\n  5)");
 				}
 			}
 		}
@@ -272,5 +261,100 @@ Nodo *search(Nodo **tracer, char *chave){
         return *tracer;
     } else{
         return NULL;
+    }
+}
+
+
+
+void Pop(Nodo **tracer, char *chave){
+	int encontrou = 0, direita = 3;
+	Nodo **anterior = tracer;
+	Nodo **temp = NULL, **ultimo = NULL;
+
+    while((*tracer)){
+        if (strcmp(chave, (*tracer)->chave) == 0){
+            encontrou = 1;
+            break;
+        }
+        else{
+            if (strcmp(chave, (*tracer)->chave) > 0){
+				anterior = tracer;
+                tracer = &(*tracer)->direita;
+				direita = 1;
+            } else{
+				anterior = tracer;
+                tracer = &(*tracer)->esquerda;
+				direita = 0;
+            }
+        }
+    }
+
+    if (encontrou == 1){
+		// CASO 1: elemento removido é uma folha
+        if ((*tracer)->direita == NULL && (*tracer)->esquerda == NULL){
+			free((*tracer)->nome);
+			free((*tracer)->telefone);
+			free((*tracer)->chave);
+			free(*tracer);
+
+			if (direita == 1){
+				(*anterior)->direita = NULL;
+			} else if (direita == 0){
+				(*anterior)->esquerda = NULL;
+			} else {
+				*tracer = NULL;
+			}
+
+		// CASO 2: elemento removido possui apenas um filho a esquerda
+		} else if ((*tracer)->direita == NULL && (*tracer)->esquerda != NULL){
+			temp = tracer;
+			free((*temp)->nome);
+			free((*temp)->telefone);
+			free((*temp)->chave);
+			free(*temp);
+			if (direita == 1){
+				(*anterior)->direita = (*tracer)->esquerda;
+			} else if (direita == 0){
+				(*anterior)->esquerda = (*tracer)->esquerda;
+			} else {
+				*tracer = (*tracer)->esquerda;
+			}
+
+		// CASO 3: elemento removido possui apenas um filho a direita
+		} else if ((*tracer)->direita != NULL && (*tracer)->esquerda == NULL){
+			temp = tracer;
+			free((*temp)->nome);
+			free((*temp)->telefone);
+			free((*temp)->chave);
+			free(*temp);
+			if (direita == 1){
+				(*anterior)->direita = (*tracer)->direita;
+			} else if (direita == 0){
+				(*anterior)->esquerda = (*tracer)->direita;
+			} else {
+				*tracer = (*tracer)->direita;
+			}
+
+		// CASO 4: elemento removido possui dois filhos
+		} else {
+			ultimo = &(*tracer)->esquerda;
+			temp = tracer;
+
+			while((*ultimo)->direita != NULL){
+				anterior = tracer;
+				ultimo = &(*ultimo)->direita;
+			}
+			strcpy((*tracer)->nome, (*ultimo)->nome);
+			(*tracer)->idade = (*ultimo)->idade;
+			strcpy((*tracer)->telefone, (*ultimo)->telefone);
+			strcpy((*tracer)->chave, (*ultimo)->chave);
+
+			strcpy((*ultimo)->chave, chave);
+			Pop(&(*tracer)->esquerda, chave);
+		}
+
+		printf("\n\nElemento removido com sucesso");
+    } else{
+       printf("\n\n ERRO, Elemento nao foi encontrado");
     }
 }
