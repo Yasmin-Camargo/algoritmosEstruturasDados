@@ -8,49 +8,53 @@
 #include <ctype.h>
 
 typedef struct{
-	char *chave;
-	char *nome;
-	int idade;
-	char *telefone; 
-	struct Nodo *esquerda; 
-	struct Nodo *direita;  
+    char *chave;
+    char *nome;
+    int idade;
+    char *telefone; 
+    struct Nodo *esquerda; 
+    struct Nodo *direita;  
 }Nodo;
 
 typedef struct{
-	Nodo *raiz;
-	int numNodos;
-	char fatorPrecedencia;
+    Nodo *raiz;
+    int numNodos;
+    char fatorPrecedencia;
 }Arvore;
 
 
 //Escopo de funções
-Arvore *Reset(Arvore *novaArvore);
-Nodo *newNodo(char nome[], int idade, char telefone[], int fatorPrecedencia);
+Arvore *RESET();
+Nodo *NEWNODO(char nome[], int idade, char telefone[], int fatorPrecedencia);
 void PUSH(Nodo **tracer, Nodo *newp);
-void imprimirPreOrdem(Nodo *minhaArvore);
-void imprimirOrdem(Nodo *minhaArvore);
-void imprimirPosOrdem(Nodo *minhaArvore);
-Nodo *search(Nodo **tracer, char *chave);
-void Pop(Nodo **tracer, char *chave);
+void PRINTPREORDEM(Nodo *minhaArvore);
+void PRINTORDEM(Nodo *minhaArvore);
+void PRINTPOSORDEM(Nodo *minhaArvore);
+Nodo *SEARCH(Nodo **tracer, char *chave);
+void POP(Nodo **tracer, char *chave);
+void CLEAR(Nodo *tracer, Arvore *minhaArvore);
+
+int FB (Nodo *tracer);
+int ALTURA(Nodo *tracer);
 
 int main()
 {
-	Arvore *minhaArvore = NULL;
-	int op = 1, fatorPrecedencia = 0, imprimir = 0, tempIdade = 0;
-	char tempNome[30], tempTelefone[20];
+    Arvore *minhaArvore = NULL;
+    int op = 1, fatorPrecedencia = 0, imprimir = 0, tempIdade = 0;
+    char tempNome[30], tempTelefone[20];
 
-	minhaArvore = Reset(minhaArvore);
-	
-	do {
-		printf ("\n\n ----------------------------\n");
-		printf ("\n  1 - nome ");
-		printf ("\n  2 - idade ");
-		printf ("\n  3 - telefone \n");
-		printf ("\nEscolha o fator de precedencia que voce deseja adicionar dados na arvore: ");
-		scanf ("%d", &fatorPrecedencia);
-	} while (!(fatorPrecedencia >= 1 && fatorPrecedencia <= 3));
+    minhaArvore = RESET();
+    
+    do {
+        printf ("\n\n ----------------------------\n");
+        printf ("\n  1 - nome ");
+        printf ("\n  2 - idade ");
+        printf ("\n  3 - telefone \n");
+        printf ("\nEscolha o fator de precedencia que voce deseja adicionar dados na arvore: ");
+        scanf ("%d", &fatorPrecedencia);
+    } while (!(fatorPrecedencia >= 1 && fatorPrecedencia <= 3));
 
-	while (op != 0){
+    while (op != 0){
         printf ("\n\n ----------------------------");
         printf ("\n          AGENDA            ");
         printf ("\n ----------------------------  ");
@@ -58,7 +62,7 @@ int main()
         printf ("\n  2) Mostrar ");
         printf ("\n  3) Buscar ");
         printf ("\n  4) Apagar ");
-		printf ("\n  5) Alterar fator de precedencia ");
+        printf ("\n  5) Alterar fator de precedencia ");
         printf ("\n  0) Sair ");
         printf ("\n\n Escolha uma opcao: ");
         scanf ("%d", &op);
@@ -72,35 +76,35 @@ int main()
             scanf("%d", &tempIdade);
             printf(" Telefone: ");
             scanf("%s", tempTelefone);
-			PUSH(&(minhaArvore->raiz), newNodo(tempNome, tempIdade, tempTelefone, fatorPrecedencia));
-			
-			
+            PUSH(&(minhaArvore->raiz), NEWNODO(tempNome, tempIdade, tempTelefone, fatorPrecedencia));
+            
+            
             break;
 
         case 2:
-			do {
-				printf ("\n\n  1 - Pre-ordem");
-				printf ("\n  2 - Ordem ");
-				printf ("\n  3 - Pos-ordem \n");
-				printf ("\n Como voce deseja imprimir toda a arvore: ");
-				scanf ("%d", &imprimir);
-			} while (!(imprimir >= 1 && imprimir <= 3));
-			switch(imprimir){
-				case 1:
-					printf("\n\n  PRE-ORDEM:\n  ");
-					imprimirPreOrdem(minhaArvore->raiz);
-				break;
+            do {
+                printf ("\n\n  1 - Pre-ordem");
+                printf ("\n  2 - Ordem ");
+                printf ("\n  3 - Pos-ordem \n");
+                printf ("\n Como voce deseja imprimir toda a arvore: ");
+                scanf ("%d", &imprimir);
+            } while (!(imprimir >= 1 && imprimir <= 3));
+            switch(imprimir){
+                case 1:
+                    printf("\n\n  PRE-ORDEM:\n  ");
+                    PRINTPREORDEM(minhaArvore->raiz);
+                break;
 
-				case 2:
-					printf("\n\n  ORDEM:\n  ");
-					imprimirOrdem(minhaArvore->raiz);
-				break;
+                case 2:
+                    printf("\n\n  ORDEM:\n  ");
+                    PRINTORDEM(minhaArvore->raiz);
+                break;
 
-				case 3:
-					printf("\n\n  POS-ORDEM:\n  ");
-					imprimirPosOrdem(minhaArvore->raiz);
-				break;
-			}
+                case 3:
+                    printf("\n\n  POS-ORDEM:\n  ");
+                    PRINTPOSORDEM(minhaArvore->raiz);
+                break;
+            }
             break;
 
         case 3:      
@@ -108,7 +112,7 @@ int main()
             scanf("%s", tempNome);
             
             Nodo *busca;
-            busca = search (&(minhaArvore->raiz), tempNome);
+            busca = SEARCH (&(minhaArvore->raiz), tempNome);
             if (busca == NULL){
                 printf("\n\n DADO NAO FOI ENCONTRADO");
             } else{
@@ -120,15 +124,14 @@ int main()
             break;
 
         case 4:
-			printf("\n Digite a chave que voce deseja excluir: ");
+            printf("\n Digite a chave que voce deseja excluir: ");
             scanf("%s", tempNome);
-			Pop(&(minhaArvore->raiz), tempNome);
+            POP(&(minhaArvore->raiz), tempNome);
             break;
 
         case 0:
             printf("\n\n Saindo...\n");
-          
-			return (0);
+            CLEAR(minhaArvore->raiz, minhaArvore);
             break;
 
         default:
@@ -136,112 +139,112 @@ int main()
             break;
         }
     }
+    return (0);
 }
 
-Arvore *Reset(Arvore *novaArvore){
-	novaArvore = (Arvore *)(malloc(sizeof(Arvore)));
-	novaArvore->numNodos = 0;
-	novaArvore->raiz = NULL;
-	return novaArvore;
+Arvore *RESET(){
+    Arvore *novaArvore = (Arvore *)(malloc(sizeof(Arvore)));
+    novaArvore->numNodos = 0;
+    novaArvore->raiz = NULL;
+    return novaArvore;
 }
 
-Nodo *newNodo(char nome[], int idade, char telefone[], int fatorPrecedencia){
-	Nodo *novoNodo = (Nodo *) (malloc(sizeof(Nodo)));
-	novoNodo->nome = (char *) (malloc(sizeof(nome)));
-	novoNodo->telefone = (char *) (malloc(sizeof(telefone)));
-	if (novoNodo == NULL || novoNodo->nome == NULL || novoNodo->telefone == NULL){
-		printf("Erro de alocacao de memoria");
-		exit(1);
-	}
+Nodo *NEWNODO(char nome[], int idade, char telefone[], int fatorPrecedencia){
+    Nodo *novoNodo = (Nodo *) (malloc(sizeof(Nodo)));
+    novoNodo->nome = (char *) (malloc(sizeof(char) * strlen(nome) + sizeof(char)));
+    novoNodo->telefone = (char *) (malloc(sizeof(char) * strlen(telefone) + sizeof(char)));
+    if (novoNodo == NULL || novoNodo->nome == NULL || novoNodo->telefone == NULL){
+        printf("Erro de alocacao de memoria");
+        exit(1);
+    }
 
-	novoNodo->direita = NULL;
-	novoNodo->esquerda = NULL;
-	novoNodo->idade = idade;
-	strcpy(novoNodo->nome, nome);
-	strcpy(novoNodo->telefone, telefone);
+    novoNodo->direita = NULL;
+    novoNodo->esquerda = NULL;
+    novoNodo->idade = idade;
+    strcpy(novoNodo->nome, nome);
+    strcpy(novoNodo->telefone, telefone);
 
-	//defindo a chave a ser utilizada
-	if (fatorPrecedencia == 1){
-		novoNodo->chave = (char *) (malloc(sizeof(nome)));
-		if (novoNodo->chave == NULL){
-			printf("Erro de alocacao de memoria");
-			exit (1);
-		}
-		strcpy(novoNodo->chave, nome);
-	} else if (fatorPrecedencia == 2){
-		novoNodo->chave = (char *) (malloc(sizeof(telefone)));
-		if (novoNodo->chave == NULL){
-			printf("Erro de alocacao de memoria");
-			exit (1);
-		}
-		sprintf(novoNodo->chave, "%d", idade); //Converte idade para string
-	} else {
-		novoNodo->chave = (char *) (malloc(sizeof(char) * strlen(telefone) + sizeof(char)));
-		if (novoNodo->chave == NULL){
-			printf("Erro de alocacao de memoria");
-			exit (1);
-		}
-		strcpy(novoNodo->chave, telefone);
-	}
-
-	return novoNodo;
+    //defindo a chave a ser utilizada
+    if (fatorPrecedencia == 1){
+        novoNodo->chave = (char *) (malloc(sizeof(char) * strlen(nome) + sizeof(char)));
+        if (novoNodo->chave == NULL){
+            printf("Erro de alocacao de memoria");
+            exit (1);
+        }
+        strcpy(novoNodo->chave, nome);
+    } else if (fatorPrecedencia == 2){
+        novoNodo->chave = (char *) (malloc(sizeof(char) * 2 + sizeof(char)));
+        if (novoNodo->chave == NULL){
+            printf("Erro de alocacao de memoria");
+            exit (1);
+        }
+        sprintf(novoNodo->chave, "%d", idade); //Converte idade para string
+    } else {
+        novoNodo->chave = (char *) (malloc(sizeof(char) * strlen(telefone) + sizeof(char)));
+        if (novoNodo->chave == NULL){
+            printf("Erro de alocacao de memoria");
+            exit (1);
+        }
+        strcpy(novoNodo->chave, telefone);
+    }
+    return novoNodo;
 }
 
 
 void PUSH(Nodo **tracer, Nodo *newp){
-	Nodo **temp = tracer;
-	if (*temp == NULL){	//Primeira pessoa a ser inserida
-		*tracer = newp;
-	}
-	else {
-		while((*tracer)){ //Percorre a árvore até encontrar uma folha
-			if(strcmp(newp->chave, (*tracer)->chave) > 0){ //Se é maior insere na direita
-				if((*tracer)->direita == NULL){ //Encontrou uma folha
-					(*tracer)->direita = newp;
-					break;
-				} else{	//Continua percorrendo a árvore
-					tracer = &(*tracer)->direita;
-				}
-			}
-			else {
-				if((*tracer)->esquerda == NULL){
-					(*tracer)->esquerda = newp;
-					break;
-				} else{
-					tracer = &(*tracer)->esquerda;
-				}
-			}
-		}
+    Nodo **temp = tracer;
+    if (*temp == NULL){ //Primeira pessoa a ser inserida
+        *tracer = newp;
+    }
+    else {
+        while((*tracer)){ //Percorre a árvore até encontrar uma folha
+            if(strcmp(newp->chave, (*tracer)->chave) > 0){ //Se é maior insere na direita
+                if((*tracer)->direita == NULL){ //Encontrou uma folha
+                    (*tracer)->direita = newp;
+                    break;
+                } else{ //Continua percorrendo a árvore
+                    tracer = &(*tracer)->direita;
+                }
+            }
+            else {
+                if((*tracer)->esquerda == NULL){
+                    (*tracer)->esquerda = newp;
+                    break;
+                } else{
+                    tracer = &(*tracer)->esquerda;
+                }
+            }
+        }
 
-	}
+    }
 }
 
 
-void imprimirPreOrdem(Nodo *minhaArvore){
-	if (minhaArvore){
-		printf("%s, ", minhaArvore->chave);
-		imprimirPreOrdem(minhaArvore->esquerda);
-		imprimirPreOrdem(minhaArvore->direita);
-	}
+void PRINTPREORDEM(Nodo *minhaArvore){
+    if (minhaArvore){
+        printf("%s, ", minhaArvore->chave);
+        PRINTPREORDEM(minhaArvore->esquerda);
+        PRINTPREORDEM(minhaArvore->direita);
+    }
 }
 
-void imprimirOrdem(Nodo *minhaArvore){
-	if (minhaArvore){
-		imprimirOrdem(minhaArvore->esquerda);
-		printf("%s, ", minhaArvore->chave);
-		imprimirOrdem(minhaArvore->direita);
-	}
+void PRINTORDEM(Nodo *minhaArvore){
+    if (minhaArvore){
+        PRINTORDEM(minhaArvore->esquerda);
+        printf("%s, ", minhaArvore->chave);
+        PRINTORDEM(minhaArvore->direita);
+    }
 }
 
-void imprimirPosOrdem(Nodo *minhaArvore){
-	if (minhaArvore){
-		imprimirPosOrdem(minhaArvore->esquerda);
-		imprimirPosOrdem(minhaArvore->direita);
-		printf(" %s, ", minhaArvore->chave);
-	}
+void PRINTPOSORDEM(Nodo *minhaArvore){
+    if (minhaArvore){
+        PRINTPOSORDEM(minhaArvore->esquerda);
+        PRINTPOSORDEM(minhaArvore->direita);
+        printf(" %s, ", minhaArvore->chave);
+    }
 }
 
-Nodo *search(Nodo **tracer, char *chave){
+Nodo *SEARCH(Nodo **tracer, char *chave){
     int encontrou = 0;
     while((*tracer)){
         if (strcmp(chave, (*tracer)->chave) == 0){
@@ -266,10 +269,10 @@ Nodo *search(Nodo **tracer, char *chave){
 
 
 
-void Pop(Nodo **tracer, char *chave){
-	int encontrou = 0, direita = 3;
-	Nodo **anterior = tracer;
-	Nodo **temp = NULL, **ultimo = NULL;
+void POP(Nodo **tracer, char chave[]){
+    int encontrou = 0, direita = 3;
+    Nodo **anterior = tracer;
+    Nodo **temp = NULL, **ultimo = NULL;
 
     while((*tracer)){
         if (strcmp(chave, (*tracer)->chave) == 0){
@@ -278,83 +281,115 @@ void Pop(Nodo **tracer, char *chave){
         }
         else{
             if (strcmp(chave, (*tracer)->chave) > 0){
-				anterior = tracer;
+                anterior = tracer;
                 tracer = &(*tracer)->direita;
-				direita = 1;
+                direita = 1;
             } else{
-				anterior = tracer;
+                anterior = tracer;
                 tracer = &(*tracer)->esquerda;
-				direita = 0;
+                direita = 0;
             }
         }
     }
 
     if (encontrou == 1){
-		// CASO 1: elemento removido é uma folha
+        // CASO 1: elemento removido é uma folha
         if ((*tracer)->direita == NULL && (*tracer)->esquerda == NULL){
-			free((*tracer)->nome);
-			free((*tracer)->telefone);
-			free((*tracer)->chave);
-			free(*tracer);
+            free((*tracer)->nome);
+            free((*tracer)->telefone);
+            free((*tracer)->chave);
+            free(*tracer);
 
-			if (direita == 1){
-				(*anterior)->direita = NULL;
-			} else if (direita == 0){
-				(*anterior)->esquerda = NULL;
-			} else {
-				*tracer = NULL;
-			}
+            if (direita == 1){
+                (*anterior)->direita = NULL;
+            } else if (direita == 0){
+                (*anterior)->esquerda = NULL;
+            } else {
+                *tracer = NULL;
+            }
 
-		// CASO 2: elemento removido possui apenas um filho a esquerda
-		} else if ((*tracer)->direita == NULL && (*tracer)->esquerda != NULL){
-			temp = tracer;
-			free((*temp)->nome);
-			free((*temp)->telefone);
-			free((*temp)->chave);
-			free(*temp);
-			if (direita == 1){
-				(*anterior)->direita = (*tracer)->esquerda;
-			} else if (direita == 0){
-				(*anterior)->esquerda = (*tracer)->esquerda;
-			} else {
-				*tracer = (*tracer)->esquerda;
-			}
+        // CASO 2: elemento removido possui apenas um filho a esquerda
+        } else if ((*tracer)->direita == NULL && (*tracer)->esquerda != NULL){
+            temp = tracer;
+            free((*temp)->nome);
+            free((*temp)->telefone);
+            free((*temp)->chave);
+            free(*temp);
+            if (direita == 1){
+                (*anterior)->direita = (*tracer)->esquerda;
+            } else if (direita == 0){
+                (*anterior)->esquerda = (*tracer)->esquerda;
+            } else {
+                *tracer = (*tracer)->esquerda;
+            }
 
-		// CASO 3: elemento removido possui apenas um filho a direita
-		} else if ((*tracer)->direita != NULL && (*tracer)->esquerda == NULL){
-			temp = tracer;
-			free((*temp)->nome);
-			free((*temp)->telefone);
-			free((*temp)->chave);
-			free(*temp);
-			if (direita == 1){
-				(*anterior)->direita = (*tracer)->direita;
-			} else if (direita == 0){
-				(*anterior)->esquerda = (*tracer)->direita;
-			} else {
-				*tracer = (*tracer)->direita;
-			}
+        // CASO 3: elemento removido possui apenas um filho a direita
+        } else if ((*tracer)->direita != NULL && (*tracer)->esquerda == NULL){
+            temp = tracer;
+            free((*temp)->nome);
+            free((*temp)->telefone);
+            free((*temp)->chave);
+            free(*temp);
+            if (direita == 1){
+                (*anterior)->direita = (*tracer)->direita;
+            } else if (direita == 0){
+                (*anterior)->esquerda = (*tracer)->direita;
+            } else {
+                *tracer = (*tracer)->direita;
+            }
 
-		// CASO 4: elemento removido possui dois filhos
-		} else {
-			ultimo = &(*tracer)->esquerda;
-			temp = tracer;
+        // CASO 4: elemento removido possui dois filhos
+        } else {
+            ultimo = &(*tracer)->esquerda;
 
-			while((*ultimo)->direita != NULL){
-				anterior = tracer;
-				ultimo = &(*ultimo)->direita;
-			}
-			strcpy((*tracer)->nome, (*ultimo)->nome);
-			(*tracer)->idade = (*ultimo)->idade;
-			strcpy((*tracer)->telefone, (*ultimo)->telefone);
-			strcpy((*tracer)->chave, (*ultimo)->chave);
+            while((*ultimo)->direita != NULL){
+                anterior = tracer;
+                ultimo = &(*ultimo)->direita;
+            }
+            strcpy((*tracer)->nome, (*ultimo)->nome);
+            (*tracer)->idade = (*ultimo)->idade;
+            strcpy((*tracer)->telefone, (*ultimo)->telefone);
+            strcpy((*tracer)->chave, (*ultimo)->chave);
 
-			strcpy((*ultimo)->chave, chave);
-			Pop(&(*tracer)->esquerda, chave);
-		}
-
-		printf("\n\nElemento removido com sucesso");
+            strcpy((*ultimo)->chave, chave);
+            POP(&(*tracer)->esquerda, chave);
+        }
     } else{
        printf("\n\n ERRO, Elemento nao foi encontrado");
+    }
+}
+
+int FB (Nodo *tracer){
+    if (tracer == NULL){
+        return 0;
+    }
+    return ALTURA(tracer->esquerda) - ALTURA(tracer->direita);
+}
+
+int ALTURA(Nodo *tracer){
+    int iEsq,iDir;
+    if (tracer == NULL){
+        return 0;
+    }
+    iEsq = ALTURA(tracer->esquerda);
+    iDir = ALTURA(tracer->direita);
+
+    if (iEsq > iDir){
+        return iEsq + 1;
+    } else{
+        return iDir + 1;
+    }
+}
+
+
+void CLEAR(Nodo *tracer, Arvore *minhaArvore){
+    if (tracer == NULL){
+        printf("\nArvore esta vazia");
+    } else{
+        while (tracer){
+            POP (&tracer, tracer->chave);
+        }   
+        minhaArvore->raiz = NULL;
+        printf("\nArvore removida com sucesso");
     }
 }
