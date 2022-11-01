@@ -65,3 +65,5 @@ exerciciosAula/fila/filaDinamica.exe
 exerciciosAula/arvores/main.exe
 exerciciosAula/arvores/.vscode/launch.json
 exerciciosAula/arvores/.vscode/tasks.json
+exerciciosAula/arvores/arvoreAvl.exe
+exerciciosAula/arvores/arvoreBinariaDeBusca.exe
