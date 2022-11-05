@@ -16,4 +16,9 @@ https://github.com/Yasmin-Camargo/algoritmosEstruturasDados/tree/main/trabalhos/
 
 
 ### LISTA DE TESTES
+#### Arvores que são AVL:
+![image](https://user-images.githubusercontent.com/88253809/200122444-48b9add9-3f71-4e41-afe0-78f6266184f6.png)
+
+#### Arvores que não são AVL:
+![image](https://user-images.githubusercontent.com/88253809/200122461-a9ce6d69-9216-4331-bae5-353e8dd3dd39.png)
 
