@@ -1,0 +1,64 @@
+Dr. Memory version 2.5.0 build 0 built on Oct 18 2021 03:10:43
+Windows version: WinVer=105;Rel=2009;Build=22621;Edition=Core
+Dr. Memory results for pid 1708: "main.exe"
+Application cmdline: "C:\Users\carol\Downloads\YASMIN\exercicio03\exercicio03\src\main.exe"
+Recorded 124 suppression(s) from default C:\Program Files (x86)\Dr. Memory\bin\suppress-default.txt
+
+Error #1: UNINITIALIZED READ: reading register eax
+# 0 KERNELBASE.dll!FindNextFileW             +0x20e    (0x7685dfbe <KERNELBASE.dll+0x11dfbe>)
+# 1 KERNELBASE.dll!FindNextFileA             +0x33     (0x76947a04 <KERNELBASE.dll+0x207a04>)
+# 2 .text   
+# 3 __mingw_glob
+# 4 _setargv
+# 5 .text   
+# 6 ntdll.dll!RtlInitializeExceptionChain    +0x6a     (0x779fbb9b <ntdll.dll+0x6bb9b>)
+# 7 ntdll.dll!RtlClearBits                   +0xbe     (0x779fbb1f <ntdll.dll+0x6bb1f>)
+Note: @0:00:00.317 in thread 6072
+Note: instruction: cmp    %eax $0x0000001a
+
+Error #2: UNINITIALIZED READ: reading register eax
+# 0 KERNELBASE.dll!FindNextFileW             +0x23b    (0x7685dfeb <KERNELBASE.dll+0x11dfeb>)
+# 1 KERNELBASE.dll!FindNextFileA             +0x33     (0x76947a04 <KERNELBASE.dll+0x207a04>)
+# 2 .text   
+# 3 __mingw_glob
+# 4 _setargv
+# 5 .text   
+# 6 ntdll.dll!RtlInitializeExceptionChain    +0x6a     (0x779fbb9b <ntdll.dll+0x6bb9b>)
+# 7 ntdll.dll!RtlClearBits                   +0xbe     (0x779fbb1f <ntdll.dll+0x6bb1f>)
+Note: @0:00:00.319 in thread 6072
+Note: instruction: data16 mov    %cx -> 0x00000234(%ebx,%eax,2)
+
+Error #3: UNINITIALIZED READ: reading register eax
+# 0 KERNELBASE.dll!FindNextFileW             +0x167    (0x7685df17 <KERNELBASE.dll+0x11df17>)
+# 1 KERNELBASE.dll!FindNextFileA             +0x33     (0x76947a04 <KERNELBASE.dll+0x207a04>)
+# 2 .text   
+# 3 __mingw_glob
+# 4 _setargv
+# 5 .text   
+# 6 ntdll.dll!RtlInitializeExceptionChain    +0x6a     (0x779fbb9b <ntdll.dll+0x6bb9b>)
+# 7 ntdll.dll!RtlClearBits                   +0xbe     (0x779fbb1f <ntdll.dll+0x6bb1f>)
+Note: @0:00:00.324 in thread 6072
+Note: instruction: test   %eax %eax
+
+===========================================================================
+FINAL SUMMARY:
+
+DUPLICATE ERROR COUNTS:
+	Error #   1:      3
+	Error #   2:      3
+
+SUPPRESSIONS USED:
+
+ERRORS FOUND:
+      0 unique,     0 total unaddressable access(es)
+      3 unique,     7 total uninitialized access(es)
+      0 unique,     0 total invalid heap argument(s)
+      0 unique,     0 total GDI usage error(s)
+      0 unique,     0 total handle leak(s)
+      0 unique,     0 total warning(s)
+      0 unique,     0 total,      0 byte(s) of leak(s)
+      0 unique,     0 total,      0 byte(s) of possible leak(s)
+ERRORS IGNORED:
+      7 unique,     7 total,   4528 byte(s) of still-reachable allocation(s)
+         (re-run with "-show_reachable" for details)
+Details: C:\Users\carol\AppData\Roaming\Dr. Memory\DrMemory-main.exe.1708.000\results.txt
