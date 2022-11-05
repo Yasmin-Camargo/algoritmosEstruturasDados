@@ -61,7 +61,6 @@ int main()
         printf ("\n  2) Mostrar ");
         printf ("\n  3) Buscar ");
         printf ("\n  4) Apagar ");
-        printf ("\n  5) Alterar fator de precedencia ");
         printf ("\n  0) Sair ");
         printf ("\n\n Escolha uma opcao: ");
         scanf ("%d", &op);

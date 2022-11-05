@@ -32,3 +32,8 @@ Criar uma fila estática e uma dinâmica com as funções de Reset, Push, Pop, C
 
 #### Pilha
 Criar uma pilha com as funções de Reset, Push, Pop, Clear e Print
+
+#### Arvores
+Implementar uma agenda (nome, idade, telefone) que armazena os dados numa árvore binária de busca (usuário escolhe qual dado é o fator de precedência). A agenda deve permitir incluir, buscar, remover e imprimir toda a árvore usando pré-ordem, central e pós-ordem.
+
+Implementar uma árvore AVL
