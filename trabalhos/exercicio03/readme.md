@@ -8,6 +8,7 @@ https://web.stanford.edu/class/cs106b/resources/style_guide.html
 https://github.com/Yasmin-Camargo/algoritmosEstruturasDados/tree/main/trabalhos/exercicio03
 
 ### Link do vídeo:
+https://drive.google.com/file/d/13CzdqWCJO3K8mzH0H0AmFviPvD2di4_g/view?usp=sharing 
 
 ### PROBLEMAS ENCONTRADOS:
 - Nodos repetidos estavam sendo adicionados na árvore
