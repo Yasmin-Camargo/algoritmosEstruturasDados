@@ -1,6 +1,5 @@
 // NOME: Yasmin Souza Camargo
-/* EXERCÍCIO: Dado um vetor nums contendo n número inteiros positivos e únicos encontre o número
-faltante na sequência. Assuma que somente um número está faltando para completar a
+/* EXERCÍCIO: Dado um vetor nums contendo n número inteiros positivos e únicos encontre o número faltante na sequência. Assuma que somente um número está faltando para completar a
 sequência numérica. */
 
 #include <stdio.h>
@@ -18,19 +17,21 @@ int main()
 	vet = (int *)(malloc(sizeof(int) * n));
 	printf("\n\n --- Para sair digite (- 1) ----\n\n");
 
-	while (numero > 0){
+	//Lê inteiros positivos
+	while (numero >= 0){
 		printf("Digite um numero: ");
 		scanf("%d", &numero);
-		if (numero > 0){
+		if (numero >= 0){
 			n++;
 			vet = (int *)(realloc(vet, sizeof(int) * n + 1));
 			vet[n - 1] = numero;
 		}
 	}
-	printf("\n\n Vetor original: | ");
+
+	printf("\n\n Vetor original: | ");	// mostra vetor
 	Print(vet, n);
 	
-	printf("\n\n Vetor ordenado: | ");
+	printf("\n\n Vetor ordenado: | ");	// mostra vetor depois da ordenação 
 	MergeSort(vet, 0, n - 1);
 	Print(vet, n);
 
@@ -49,7 +50,7 @@ void Print(int *vet, int tamanho){
 	}
 }
 
-void MergeSort(int * vet, int limiteEsquerda, int limiteDireita){ 
+void MergeSort(int * vet, int limiteEsquerda, int limiteDireita){  // Ordena vetor
 	int i = 0, j = 0, k = 0, metade = 0, aux[limiteDireita - limiteEsquerda + 1];
 
 	if (limiteEsquerda < limiteDireita){ 
@@ -86,13 +87,14 @@ void MergeSort(int * vet, int limiteEsquerda, int limiteDireita){
 			k++;
 		}
 
+		// coloca números ordenados no vetor principal
 		for (i = limiteEsquerda; i <= limiteDireita; i++){
 			vet[i] = aux[i - limiteEsquerda];
 		}
 	}
 }
 
-int NumeroFaltante(int *vet, int tamanho){
+int NumeroFaltante(int *vet, int tamanho){	// Encontra número que esta faltando na sequencia
 	int num = vet[0];
 	for (int i = 0; i < tamanho; i++){
 		if (num != vet[i]){
